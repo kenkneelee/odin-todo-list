@@ -1,0 +1,61 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+
+    grid-template-areas:
+        "side header header"
+        "side content aside"
+        "side footer footer";
+
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+}
+
+header {
+    grid-area: header;
+    background-color: aquamarine;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#userIcon {
+    border-radius: 50%;
+    width: 50px;
+}
+
+/* #notifications {
+    display:flex;
+    align-items: center;
+  } */
+
+#userProfile {
+    display: flex;
+    align-items: center;
+}
+
+#sidebar {
+    grid-area: side;
+    background-color: aqua;
+}
+
+#main-content {
+    grid-area: content;
+    background-color: bisque;
+}
+
+#aside {
+    grid-area:aside;
+    background-color: beige;
+}
+
+footer {
+    grid-area: footer;
+    background-color: cadetblue;
+}
