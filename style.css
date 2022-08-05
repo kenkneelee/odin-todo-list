@@ -30,65 +30,74 @@ header {
     width: 50px;
 }
 
-/* #notifications {
-    display:flex;
+#notifications {
+    display: flex;
     align-items: center;
-  } */
+}
+
+#notifBell {
+    width: 20px;
+}
 
 #userProfile {
     display: flex;
     align-items: center;
 }
 
-
-
-
 #sidebar {
     grid-area: side;
     background-color: aqua;
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-
-
-
-
 
 #main-content {
     grid-area: content;
     background-color: bisque;
 }
 
+#main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 #cards {
-    display:flex;
+    display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
 .card {
-    background-color:antiquewhite;
+    background-color: antiquewhite;
     border-radius: 20px;
 }
 
-
-
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+}
 
 #aside {
-    grid-area:aside;
+    grid-area: aside;
     background-color: beige;
 }
 
 #calendar {
-    display:flex;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    height: 100%;
     flex-direction: column;
     justify-content: space-evenly;
-    height:100%;
-    margin:0;
-    padding:0;
+    margin: 0rem 1rem;
 }
 
-
+.calendarDay {
+    border: 1px solid black;
+    border-radius: 5px;
+}
 
 footer {
     grid-area: footer;
