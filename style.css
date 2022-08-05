@@ -8,7 +8,7 @@ body {
     display: grid;
 
     grid-template-areas:
-        "side header header"
+        "header header header"
         "side content aside"
         "side footer footer";
 
@@ -40,22 +40,58 @@ header {
     align-items: center;
 }
 
+
+
+
 #sidebar {
     grid-area: side;
     background-color: aqua;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
+
+
+
+
 
 #main-content {
     grid-area: content;
     background-color: bisque;
 }
 
+#cards {
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card {
+    background-color:antiquewhite;
+    border-radius: 20px;
+}
+
+
+
+
 #aside {
     grid-area:aside;
     background-color: beige;
 }
 
+#calendar {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height:100%;
+    margin:0;
+    padding:0;
+}
+
+
+
 footer {
     grid-area: footer;
     background-color: cadetblue;
+    text-align: center;
 }
