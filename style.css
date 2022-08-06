@@ -1,20 +1,22 @@
-html,
-body {
-    margin: 0;
-    padding: 0;
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0.5rem;
 }
 
 body {
     display: grid;
-
     grid-template-areas:
         "header header header"
         "side content aside"
         "side footer footer";
-
-    grid-template-columns: 200px 1fr 200px;
+    grid-template-columns: 1fr 5fr 2fr;
     grid-template-rows: auto 1fr auto;
     height: 100vh;
+    margin: 0;
 }
 
 header {
@@ -33,6 +35,7 @@ header {
 #notifications {
     display: flex;
     align-items: center;
+    gap: 1rem;
 }
 
 #notifBell {
@@ -42,25 +45,59 @@ header {
 #userProfile {
     display: flex;
     align-items: center;
+    gap: 1rem;
 }
 
 #sidebar {
     grid-area: side;
-    background-color: aqua;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+#main-content,
+#aside {
+    border: 2px solid #c0c0c06d;
+    box-sizing: border-box;
+    background: linear-gradient(
+        to bottom,
+        #304352,
+        #c0c0c0
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-attachment:scroll;
+}
+
+#sidebar,
+header,
+footer {
+    background-color: #1f2c36;
+    color: #c0c0c0;
+    border: 2px solid #c0c0c06d;
+    box-sizing: border-box;
+}
+
 #main-content {
     grid-area: content;
-    background-color: bisque;
+    /* background-color: bisque; */
+    overflow-y: scroll;
+    padding: 1rem;
+    color: #1f2c36;
+}
+::-webkit-scrollbar {
+    width: 0.5rem;
+    color: red;
+    background: rgba(128, 128, 128, 0.142);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #1f2c3665;
 }
 
 #main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: #c0c0c0;
 }
 
 #cards {
@@ -70,8 +107,12 @@ header {
 }
 
 .card {
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
     border-radius: 20px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .cardHeader {
@@ -82,25 +123,47 @@ header {
 #aside {
     grid-area: aside;
     background-color: beige;
+    color: #c0c0c0;
 }
 
 #calendar {
     list-style: none;
-    padding: 0;
     display: flex;
-    height: 100%;
     flex-direction: column;
     justify-content: space-evenly;
-    margin: 0rem 1rem;
+    height: 80%;
 }
 
 .calendarDay {
-    border: 1px solid black;
-    border-radius: 5px;
+    padding: 1rem;
+    background: #efefef;
+    border: none;
+    border-radius: 0.5rem;
+    color: #444;
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
+        -6px -6px 10px rgba(255, 255, 255, 0.5),
+        6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15); */
 }
 
 footer {
     grid-area: footer;
-    background-color: cadetblue;
     text-align: center;
+}
+
+footer p a {
+    color: #c0c0c0;
+}
+
+header,
+#sidebar {
+    padding: 0.5rem;
+}
+
+#aside,
+footer {
+    padding: 0.5rem;
 }
