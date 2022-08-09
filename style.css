@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis&display=swap');
+
 * {
     box-sizing: border-box;
+    font-family: 'Dosis', sans-serif;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0.5rem;
+html {
+        font-size: 1vw;
 }
 
 body {
@@ -21,7 +23,6 @@ body {
 
 header {
     grid-area: header;
-    background-color: aquamarine;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -55,9 +56,22 @@ header {
     justify-content: space-between;
 }
 
+#sidebar-links {
+    list-style-type: none;
+    padding: 0.5rem;
+}
+
+#sidebar-links>li {
+    padding: 0.5rem;
+}
+
+#sidebar-links ul {
+    padding: 0.5rem 0 0 20%;
+}
+
 #main-content,
 #aside {
-    border: 2px solid #c0c0c06d;
+    border: px solid #c0c0c06d;
     box-sizing: border-box;
     background: linear-gradient(
         to bottom,
@@ -113,6 +127,12 @@ footer {
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor:pointer;
+}
+
+.card:hover, .calendarDay:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transition-duration: 500ms;
 }
 
 .cardHeader {
@@ -124,6 +144,10 @@ footer {
     grid-area: aside;
     background-color: beige;
     color: #c0c0c0;
+}
+
+#aside ul {
+    padding: 0;
 }
 
 #calendar {
@@ -166,4 +190,8 @@ header,
 #aside,
 footer {
     padding: 0.5rem;
+}
+
+button {
+    font-size: 1rem;
 }
