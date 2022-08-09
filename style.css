@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Dosis&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Dosis&display=swap");
+
+/* Page layout stuff */
 
 * {
     box-sizing: border-box;
-    font-family: 'Dosis', sans-serif;
+    font-family: "Dosis", sans-serif;
 }
-
 html {
-        font-size: 1vw;
+    font-size: clamp(12px, calc(0.625rem + ((1vw - 10.8px) * 0.9259)), 20px);
 }
-
 body {
     display: grid;
     grid-template-areas:
@@ -21,6 +21,8 @@ body {
     margin: 0;
 }
 
+/* Header stuff */
+
 header {
     grid-area: header;
     display: flex;
@@ -28,26 +30,25 @@ header {
     align-items: center;
 }
 
-#userIcon {
-    border-radius: 50%;
-    width: 50px;
-}
-
 #notifications {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
-
 #notifBell {
     width: 20px;
 }
-
 #userProfile {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
+#userIcon {
+    border-radius: 50%;
+    width: 50px;
+}
+
+/* Sidebar stuff */
 
 #sidebar {
     grid-area: side;
@@ -60,35 +61,18 @@ header {
     list-style-type: none;
     padding: 0.5rem;
 }
-
-#sidebar-links>li {
+#sidebar-links > li {
     padding: 0.5rem;
 }
-
 #sidebar-links ul {
     padding: 0.5rem 0 0 20%;
 }
-
-#main-content,
-#aside {
-    border: px solid #c0c0c06d;
-    box-sizing: border-box;
-    background: linear-gradient(
-        to bottom,
-        #304352,
-        #c0c0c0
-    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background-attachment:scroll;
+#sidebar-bottom {
+    list-style: none;
+    padding-left: 1rem;
 }
 
-#sidebar,
-header,
-footer {
-    background-color: #1f2c36;
-    color: #c0c0c0;
-    border: 2px solid #c0c0c06d;
-    box-sizing: border-box;
-}
+/* Main content stuff */
 
 #main-content {
     grid-area: content;
@@ -127,10 +111,11 @@ footer {
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.card:hover, .calendarDay:hover {
+.card:hover,
+.calendarDay:hover {
     background: rgba(255, 255, 255, 0.4);
     transition-duration: 500ms;
 }
@@ -140,10 +125,13 @@ footer {
     justify-content: space-between;
 }
 
+/* Right side stuff */
+
 #aside {
     grid-area: aside;
     background-color: beige;
     color: #c0c0c0;
+    padding: 0.5rem;
 }
 
 #aside ul {
@@ -173,6 +161,8 @@ footer {
         6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15); */
 }
 
+/* Footer stuff */
+
 footer {
     grid-area: footer;
     text-align: center;
@@ -182,16 +172,55 @@ footer p a {
     color: #c0c0c0;
 }
 
+
+
+
+
+#sidebar,
 header,
-#sidebar {
+footer {
+    background-color: #1f2c36;
+    color: #c0c0c0;
+    border: 2px solid #c0c0c06d;
+    box-sizing: border-box;
     padding: 0.5rem;
 }
 
-#aside,
-footer {
-    padding: 0.5rem;
+#main-content,
+#aside {
+    border: px solid #c0c0c06d;
+    box-sizing: border-box;
+    background: linear-gradient(
+        to bottom,
+        #304352,
+        #c0c0c0
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-attachment: scroll;
 }
 
 button {
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.4rem;
+    color: #444;
     font-size: 1rem;
+    text-align: center;
+    outline: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    box-shadow: -2px -2px 14px rgba(255, 255, 255, 0.3),
+        -2px -2px 10px rgba(255, 255, 255, 0.1),
+        2px 2px 8px rgba(255, 255, 255, 0.075), 2px 2px 10px rgba(0, 0, 0, 0.15);
+}
+button:hover {
+    box-shadow: -1px -1px 6px rgba(255, 255, 255, 0.4),
+        -1px -1px 4px rgba(255, 255, 255, 0.2),
+        2px 2px 2px rgba(255, 255, 255, 0.05), 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+button:active {
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(255, 255, 255, 0.3),
+        inset 2px 2px 2px rgba(255, 255, 255, 0.075),
+        inset 2px 2px 4px rgba(0, 0, 0, 0.15);
 }
