@@ -16,7 +16,7 @@ export function displayHeader(name, icon) {
     notifBell.id = "notifBell";
     notifBell.src = notif_Bell;
 
-    // >> user profile section 
+    // >> user profile section
     const userProfile = document.createElement("div");
     userProfile.id = "userProfile";
     // >>> welcome msg
@@ -35,69 +35,98 @@ export function displayHeader(name, icon) {
     document.body.appendChild(header);
 }
 
-export function displaySidebar (projects) {
+export function displaySidebar(projects) {
     // sidebar container
     const sidebar = document.createElement("div");
-    sidebar.id="sidebar";
+    sidebar.id = "sidebar";
 
     // >sidebar links
     const sidebarLinks = document.createElement("ul");
-    sidebarLinks.id="sidebar-links";
+    sidebarLinks.id = "sidebar-links";
 
     const today = document.createElement("li");
     today.textContent = "Today";
 
     const projectList = document.createElement("li");
-    projectList.textContent="Projects";
+    projectList.textContent = "Projects";
 
     const projectListList = document.createElement("ul");
 
-    projects.forEach (project => {
+    projects.forEach((project) => {
         let thisProject = document.createElement("li");
         thisProject.textContent = project;
         projectListList.appendChild(thisProject);
-    })
+    });
+
+    const completed = document.createElement("li");
+    completed.textContent = "Completed";
+
 
     projectList.appendChild(projectListList);
-    sidebarLinks.append(today, projectList);
-
+    sidebarLinks.append(today, projectList, completed);
 
     const sidebarBottom = document.createElement("ul");
-    sidebarBottom.id="sidebar-bottom";
+    sidebarBottom.id = "sidebar-bottom";
     const settings = document.createElement("li");
-    settings.textContent="Settings";
+    settings.textContent = "Settings";
     const logOut = document.createElement("li");
-    logOut.textContent="Log Out";
+    logOut.textContent = "Log Out";
     sidebarBottom.append(settings, logOut);
-
 
     sidebar.append(sidebarLinks, sidebarBottom);
     document.body.appendChild(sidebar);
 }
 
+export function displayAside() {
+    const aside = document.createElement("div");
+    aside.id = "aside";
+    const asideHeader = document.createElement("h2");
+    asideHeader.textContent = "This Week";
+    const calendar = document.createElement("ul");
+    calendar.id="calendar";
+    // temp code for days, learn to use date-fns
+    const days = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+    ];
+    days.forEach((a) => {
+        const day = document.createElement("li");
+        day.classList.add("calendarDay");
+        day.textContent = a;
+        calendar.appendChild(day);
+    });
+    aside.append(asideHeader,calendar);
+    document.body.appendChild(aside);
+}
 
+export function displayFooter () {
+    const footer = document.createElement("footer");
+    const footerText = document.createElement("p");
+    footerText.innerHTML = `Made by
+    <a href="https://github.com/kenkneelee">Kenny Lee</a>
+    for
+    <a href="https://www.theodinproject.com/">The Odin Project.</a>`
+    footer.appendChild(footerText);
+
+    document.body.appendChild(footer);
+}
+
+
+{/* <footer>
+<p>
+    Made by
+    <a href="https://github.com/kenkneelee">Kenny Lee</a>
+    for
+    <a href="https://www.theodinproject.com/">The Odin Project.</a>
+</p>
+</footer> */}
 
 /* <body>
-    <div id="sidebar">
-        <ul id="sidebar-links">
-            <li>Today</li>
-            <li>
-                Projects
-                <ul>
-                    <li>Sample project</li>
-                    <li>Sample project 2</li>
-                    <li>Sample project 3</li>
-                </ul>
-            </li>
-            <li>Completed</li>
-        </ul>
-
-        <ul id="sidebar-bottom">
-            <li>Settings</li>
-            <li>Log out</li>
-        </ul>
-    </div>
-
     <div id="aside">
         <h2>This Week</h2>
         <ul id="calendar">

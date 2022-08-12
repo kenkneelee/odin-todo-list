@@ -1,7 +1,9 @@
 import './styles/style.css';
-import {displayHeader, displaySidebar} from "./modules/displayUI";
+import {displayHeader, displaySidebar, displayAside, displayFooter} from "./modules/displayUI";
 displayHeader("Ken");
 displaySidebar(["Project", "Another", "And another"]);
+displayAside();
+displayFooter();
 
 console.log("hello");
 

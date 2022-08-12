@@ -36,7 +36,7 @@ header {
     gap: 1rem;
 }
 #notifBell {
-    width: 40px;
+    width: 3rem;
 }
 #userProfile {
     display: flex;
@@ -45,7 +45,7 @@ header {
 }
 #userIcon {
     border-radius: 50%;
-    width: 50px;
+    width: 3rem;
 }
 
 /* Sidebar stuff */
@@ -136,6 +136,7 @@ header {
 
 #aside ul {
     padding: 0;
+    list-style-type: none;
 }
 
 #calendar {
