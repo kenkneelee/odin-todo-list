@@ -1,4 +1,5 @@
 import notif_Bell from "../images/notif_Bell.svg";
+import { daysOfWeek } from "./week.js";
 
 export function displayHeader(name, icon) {
     // header container
@@ -85,15 +86,8 @@ export function displayAside() {
     const calendar = document.createElement("ul");
     calendar.id="calendar";
     // temp code for days, learn to use date-fns
-    const days = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-    ];
+
+    const days = daysOfWeek();
     days.forEach((a) => {
         const day = document.createElement("li");
         day.classList.add("calendarDay");

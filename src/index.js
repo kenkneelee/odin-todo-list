@@ -6,6 +6,7 @@ import {
     displayFooter,
     displayMain,
 } from "./modules/displayUI";
+
 displayHeader("Ken");
 displaySidebar(["Project", "Another", "And another"]);
 displayAside();
