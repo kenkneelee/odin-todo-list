@@ -116,36 +116,73 @@ export function displayFooter () {
     document.body.appendChild(footer);
 }
 
+export function displayMain(cardArray) {
+    const mainContent = document.createElement("div");
+    mainContent.id= "main-content";
 
-{/* <footer>
-<p>
-    Made by
-    <a href="https://github.com/kenkneelee">Kenny Lee</a>
-    for
-    <a href="https://www.theodinproject.com/">The Odin Project.</a>
-</p>
-</footer> */}
+    const mainHeader = document.createElement("div");
+    mainHeader.id= "main-header";
+
+    // temp, replace with project name
+    const mainHeaderText = document.createElement("h2");
+    mainHeaderText.textContent="All Projects";
+
+    const newTaskButton = document.createElement("button");
+    newTaskButton.textContent = "New Task";
+
+    mainHeader.append(mainHeaderText, newTaskButton)
+
+    // card stuff
+    const cards = document.createElement("div");
+    cards.id="cards";
+
+    cardArray.forEach(cardObject => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        const cardHeader = document.createElement("h3");
+        cardHeader.classList.add("cardHeader");
+
+        const cardSpan = document.createElement("span");
+        cardSpan.textContent = "Test card header";
+        const cardCheckbox = document.createElement("input");
+        cardCheckbox.type = "checkbox";
+        cardCheckbox.checked="checked";
+        cardSpan.prepend(cardCheckbox);
+
+        const cardButtons = document.createElement("div");
+        const archiveButton = document.createElement("button");
+        archiveButton.textContent="Archive";
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent="Delete";
+        cardButtons.append(archiveButton,deleteButton);
+
+        cardHeader.append(cardSpan, cardButtons);
+
+        const dueDate = document.createElement("p");
+        dueDate.textContent = "August 20, 2022";
+        const description = document.createElement("p");
+        description.textContent="Lorem ipsum";
+
+        card.append(cardHeader, dueDate, description);
+        cards.append(card);
+    })
+
+
+
+    mainContent.append (mainHeader, cards);
+    document.body.appendChild(mainContent);
+}
+
 
 /* <body>
-    <div id="aside">
-        <h2>This Week</h2>
-        <ul id="calendar">
-            <li class="calendarDay">Monday</li>
-            <li class="calendarDay">Tuesday</li>
-            <li class="calendarDay">Wednesday</li>
-            <li class="calendarDay">Thursday</li>
-            <li class="calendarDay">Friday</li>
-            <li class="calendarDay">Saturday</li>
-            <li class="calendarDay">Sunday</li>
-        </ul>
-    </div>
-
     <div id="main-content">
         <div id="main-header">
             <h2>All Projects</h2>
             <button>New Task</button>
         </div>
         <div id="cards">
+
             <div class="card">
                 <h3 class="cardHeader">
                     <span>
@@ -166,66 +203,7 @@ export function displayFooter () {
                     reprehenderit sint molestias. Quasi!
                 </p>
             </div>
-            <div class="card">
-                <h3 class="cardHeader">
-                    <span>
-                        <input type="checkbox" checked="checked" />
-                        Test card header
-                    </span>
-                    <div>
-                        <button>Archive</button>
-                        <button>Delete</button>
-                    </div>
-                </h3>
-                <p>Due: August 20, 2022</p>
-                <p>
-                    Test card description goes here. Lorem ipsum dolor, sit amet
-                    consectetur adipisicing elit. Dolore suscipit laudantium
-                    nulla vero dolores magnam saepe, neque perferendis fugit
-                    doloribus quod vel necessitatibus impedit soluta voluptates
-                    reprehenderit sint molestias. Quasi!
-                </p>
-            </div>
-            <div class="card">
-                <h3 class="cardHeader">
-                    <span>
-                        <input type="checkbox" checked="checked" />
-                        Test card header
-                    </span>
-                    <div>
-                        <button>Archive</button>
-                        <button>Delete</button>
-                    </div>
-                </h3>
-                <p>Due: August 20, 2022</p>
-                <p>
-                    Test card description goes here. Lorem ipsum dolor, sit amet
-                    consectetur adipisicing elit. Dolore suscipit laudantium
-                    nulla vero dolores magnam saepe, neque perferendis fugit
-                    doloribus quod vel necessitatibus impedit soluta voluptates
-                    reprehenderit sint molestias. Quasi!
-                </p>
-            </div>
-            <div class="card">
-                <h3 class="cardHeader">
-                    <span>
-                        <input type="checkbox" checked="checked" />
-                        Test card header
-                    </span>
-                    <div>
-                        <button>Archive</button>
-                        <button>Delete</button>
-                    </div>
-                </h3>
-                <p>Due: August 20, 2022</p>
-                <p>
-                    Test card description goes here. Lorem ipsum dolor, sit amet
-                    consectetur adipisicing elit. Dolore suscipit laudantium
-                    nulla vero dolores magnam saepe, neque perferendis fugit
-                    doloribus quod vel necessitatibus impedit soluta voluptates
-                    reprehenderit sint molestias. Quasi!
-                </p>
-            </div>
+
         </div>
     </div>
 
