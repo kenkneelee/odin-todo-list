@@ -144,7 +144,7 @@ export function displayMain(cardArray) {
         cardHeader.classList.add("cardHeader");
 
         const cardSpan = document.createElement("span");
-        cardSpan.textContent = "Test card header";
+        cardSpan.textContent = cardObject.title;
         const cardCheckbox = document.createElement("input");
         cardCheckbox.type = "checkbox";
         cardCheckbox.checked="checked";
@@ -160,9 +160,9 @@ export function displayMain(cardArray) {
         cardHeader.append(cardSpan, cardButtons);
 
         const dueDate = document.createElement("p");
-        dueDate.textContent = "August 20, 2022";
+        dueDate.textContent = cardObject.due;
         const description = document.createElement("p");
-        description.textContent="Lorem ipsum";
+        description.textContent= cardObject.description;
 
         card.append(cardHeader, dueDate, description);
         cards.append(card);
