@@ -1,173 +1,192 @@
 import notif_Bell from "../images/notif_Bell.svg";
 import { daysOfWeek } from "./week.js";
+import projects from "./projects";
 
-export function displayHeader(name, icon) {
-    // header container
-    const header = document.createElement("header");
+export default function displayUI() {
+    const displayHeader = function (name, icon) {
+        // header container
+        const header = document.createElement("header");
+        // >app logo and title (left)
+        const logo = document.createElement("h1");
+        logo.textContent = "To-Do";
+        // >right side container
+        const notifications = document.createElement("div");
+        notifications.id = "notifications";
 
-    // >app logo and title (left)
-    const logo = document.createElement("h1");
-    logo.textContent = "To-Do";
+        const notifBell = document.createElement("img");
+        notifBell.id = "notifBell";
+        notifBell.src = notif_Bell;
+        // >> user profile section
+        const userProfile = document.createElement("div");
+        userProfile.id = "userProfile";
+        // >>> welcome msg
+        const userMsg = document.createElement("div");
+        userMsg.textContent = "Welcome, " + name;
+        // >>> icon image
+        const userIcon = document.createElement("img");
+        userIcon.id = "userIcon";
+        userIcon.src = "https://avatars.githubusercontent.com/u/89105909?v=4";
 
-    // >right side container
-    const notifications = document.createElement("div");
-    notifications.id = "notifications";
+        userProfile.append(userMsg, userIcon);
+        notifications.append(notifBell, userProfile);
+        // DOM functions to append to page
+        header.append(logo, notifications);
+        document.body.appendChild(header);
+    };
 
-    const notifBell = document.createElement("img");
-    notifBell.id = "notifBell";
-    notifBell.src = notif_Bell;
+    const displaySidebar = function (projects) {
+        // sidebar container
+        const sidebar = document.createElement("div");
+        sidebar.id = "sidebar";
+        // >sidebar links
+        const sidebarLinks = document.createElement("ul");
+        sidebarLinks.id = "sidebar-links";
 
-    // >> user profile section
-    const userProfile = document.createElement("div");
-    userProfile.id = "userProfile";
-    // >>> welcome msg
-    const userMsg = document.createElement("div");
-    userMsg.textContent = "Welcome, " + name;
-    // >>> icon image
-    const userIcon = document.createElement("img");
-    userIcon.id = "userIcon";
-    userIcon.src = "https://avatars.githubusercontent.com/u/89105909?v=4";
+        const today = document.createElement("li");
+        today.textContent = "Today";
 
-    userProfile.append(userMsg, userIcon);
-    notifications.append(notifBell, userProfile);
+        const projectList = document.createElement("li");
+        projectList.textContent = "Projects";
 
-    // DOM functions to append to page
-    header.append(logo, notifications);
-    document.body.appendChild(header);
+        const projectListList = document.createElement("ul");
+
+        projects.forEach((project) => {
+            let thisProject = document.createElement("li");
+            thisProject.textContent = project;
+            projectListList.appendChild(thisProject);
+        });
+
+        const completed = document.createElement("li");
+        completed.textContent = "Completed";
+
+        projectList.appendChild(projectListList);
+        sidebarLinks.append(today, projectList, completed);
+
+        const sidebarBottom = document.createElement("ul");
+        sidebarBottom.id = "sidebar-bottom";
+        const settings = document.createElement("li");
+        settings.textContent = "Settings";
+        const logOut = document.createElement("li");
+        logOut.textContent = "Log Out";
+        sidebarBottom.append(settings, logOut);
+
+        sidebar.append(sidebarLinks, sidebarBottom);
+        document.body.appendChild(sidebar);
+    };
+
+    const displayAside = function () {
+        const aside = document.createElement("div");
+        aside.id = "aside";
+        const asideHeader = document.createElement("h2");
+        asideHeader.textContent = "This Week";
+        const calendar = document.createElement("ul");
+        calendar.id = "calendar";
+
+        const days = daysOfWeek();
+        days.forEach((a) => {
+            const day = document.createElement("li");
+            day.classList.add("calendarDay");
+            day.textContent = a;
+            calendar.appendChild(day);
+        });
+        aside.append(asideHeader, calendar);
+        document.body.appendChild(aside);
+    };
+
+    const displayFooter = function () {
+        const footer = document.createElement("footer");
+        const footerText = document.createElement("p");
+        footerText.innerHTML = `Made by
+        <a href="https://github.com/kenkneelee">Kenny Lee</a>
+        for
+        <a href="https://www.theodinproject.com/">The Odin Project.</a>`;
+        footer.appendChild(footerText);
+
+        document.body.appendChild(footer);
+    };
+
+    const displayMain = function (cardArray) {
+        const mainContent = document.createElement("div");
+        mainContent.id = "main-content";
+
+        const mainHeader = document.createElement("div");
+        mainHeader.id = "main-header";
+
+        // temp, replace with project name
+        const mainHeaderText = document.createElement("h2");
+        mainHeaderText.textContent = "All Projects";
+
+        const newTaskButton = document.createElement("button");
+        newTaskButton.textContent = "New Task";
+
+        mainHeader.append(mainHeaderText, newTaskButton);
+
+        // card stuff
+        const cards = document.createElement("div");
+        cards.id = "cards";
+
+        cardArray.forEach((cardObject) => {
+            const card = document.createElement("div");
+            card.classList.add("card");
+
+            const cardHeader = document.createElement("h3");
+            cardHeader.classList.add("cardHeader");
+
+            const cardSpan = document.createElement("span");
+            cardSpan.textContent = cardObject.title;
+            const cardCheckbox = document.createElement("input");
+            cardCheckbox.type = "checkbox";
+            cardCheckbox.checked = "checked";
+            cardSpan.prepend(cardCheckbox);
+
+            const cardButtons = document.createElement("div");
+            const archiveButton = document.createElement("button");
+            archiveButton.textContent = "Archive";
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            cardButtons.append(archiveButton, deleteButton);
+
+            cardHeader.append(cardSpan, cardButtons);
+
+            const dueDate = document.createElement("p");
+            dueDate.textContent = cardObject.due;
+            const description = document.createElement("p");
+            description.textContent = cardObject.description;
+
+            card.append(cardHeader, dueDate, description);
+            cards.append(card);
+        });
+        mainContent.append(mainHeader, cards);
+        document.body.appendChild(mainContent);
+    };
+
+    displayHeader("Ken");
+    displaySidebar(projects());
+    displayAside();
+    displayFooter();
+    displayMain([
+        {
+            title: "Do the thing",
+            due: "September 1, 2022",
+            description: "This is a sample project. Does it work?",
+        },
+        {
+            title: "Do the other thing",
+            due: "September 9, 2022",
+            description: "This is another sample project. It do work.",
+        },
+        {
+            title: "Do the last thing",
+            due: "September 23, 2022",
+            description:
+                "lorem ipsum blablablabdlask jsdaklhjdkahjd sdklajhdkja",
+        },
+    ]);
+
+    return {
+        init,
+    };
 }
-
-export function displaySidebar(projects) {
-    // sidebar container
-    const sidebar = document.createElement("div");
-    sidebar.id = "sidebar";
-
-    // >sidebar links
-    const sidebarLinks = document.createElement("ul");
-    sidebarLinks.id = "sidebar-links";
-
-    const today = document.createElement("li");
-    today.textContent = "Today";
-
-    const projectList = document.createElement("li");
-    projectList.textContent = "Projects";
-
-    const projectListList = document.createElement("ul");
-
-    projects.forEach((project) => {
-        let thisProject = document.createElement("li");
-        thisProject.textContent = project;
-        projectListList.appendChild(thisProject);
-    });
-
-    const completed = document.createElement("li");
-    completed.textContent = "Completed";
-
-
-    projectList.appendChild(projectListList);
-    sidebarLinks.append(today, projectList, completed);
-
-    const sidebarBottom = document.createElement("ul");
-    sidebarBottom.id = "sidebar-bottom";
-    const settings = document.createElement("li");
-    settings.textContent = "Settings";
-    const logOut = document.createElement("li");
-    logOut.textContent = "Log Out";
-    sidebarBottom.append(settings, logOut);
-
-    sidebar.append(sidebarLinks, sidebarBottom);
-    document.body.appendChild(sidebar);
-}
-
-export function displayAside() {
-    const aside = document.createElement("div");
-    aside.id = "aside";
-    const asideHeader = document.createElement("h2");
-    asideHeader.textContent = "This Week";
-    const calendar = document.createElement("ul");
-    calendar.id="calendar";
-    // temp code for days, learn to use date-fns
-
-    const days = daysOfWeek();
-    days.forEach((a) => {
-        const day = document.createElement("li");
-        day.classList.add("calendarDay");
-        day.textContent = a;
-        calendar.appendChild(day);
-    });
-    aside.append(asideHeader,calendar);
-    document.body.appendChild(aside);
-}
-
-export function displayFooter () {
-    const footer = document.createElement("footer");
-    const footerText = document.createElement("p");
-    footerText.innerHTML = `Made by
-    <a href="https://github.com/kenkneelee">Kenny Lee</a>
-    for
-    <a href="https://www.theodinproject.com/">The Odin Project.</a>`
-    footer.appendChild(footerText);
-
-    document.body.appendChild(footer);
-}
-
-export function displayMain(cardArray) {
-    const mainContent = document.createElement("div");
-    mainContent.id= "main-content";
-
-    const mainHeader = document.createElement("div");
-    mainHeader.id= "main-header";
-
-    // temp, replace with project name
-    const mainHeaderText = document.createElement("h2");
-    mainHeaderText.textContent="All Projects";
-
-    const newTaskButton = document.createElement("button");
-    newTaskButton.textContent = "New Task";
-
-    mainHeader.append(mainHeaderText, newTaskButton)
-
-    // card stuff
-    const cards = document.createElement("div");
-    cards.id="cards";
-
-    cardArray.forEach(cardObject => {
-        const card = document.createElement("div");
-        card.classList.add("card");
-
-        const cardHeader = document.createElement("h3");
-        cardHeader.classList.add("cardHeader");
-
-        const cardSpan = document.createElement("span");
-        cardSpan.textContent = cardObject.title;
-        const cardCheckbox = document.createElement("input");
-        cardCheckbox.type = "checkbox";
-        cardCheckbox.checked="checked";
-        cardSpan.prepend(cardCheckbox);
-
-        const cardButtons = document.createElement("div");
-        const archiveButton = document.createElement("button");
-        archiveButton.textContent="Archive";
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent="Delete";
-        cardButtons.append(archiveButton,deleteButton);
-
-        cardHeader.append(cardSpan, cardButtons);
-
-        const dueDate = document.createElement("p");
-        dueDate.textContent = cardObject.due;
-        const description = document.createElement("p");
-        description.textContent= cardObject.description;
-
-        card.append(cardHeader, dueDate, description);
-        cards.append(card);
-    })
-
-
-
-    mainContent.append (mainHeader, cards);
-    document.body.appendChild(mainContent);
-}
-
 
 /* <body>
     <div id="main-content">
