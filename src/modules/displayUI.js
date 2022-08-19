@@ -59,8 +59,11 @@ export default function displayUI() {
         const completed = document.createElement("li");
         completed.textContent = "Completed";
 
+        const newProject = document.createElement("li");
+        newProject.textContent = "New Project";
+
         projectList.appendChild(projectListList);
-        sidebarLinks.append(today, projectList, completed);
+        sidebarLinks.append(today, projectList, completed, newProject);
 
         const sidebarBottom = document.createElement("ul");
         sidebarBottom.id = "sidebar-bottom";
@@ -183,9 +186,7 @@ export default function displayUI() {
         },
     ]);
 
-    return {
-        init,
-    };
+
 }
 
 /* <body>
