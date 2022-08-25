@@ -52,7 +52,7 @@ export default function displayUI() {
 
         projects.forEach((project) => {
             let thisProject = document.createElement("li");
-            thisProject.textContent = project;
+            thisProject.textContent = project.title;
             projectListList.appendChild(thisProject);
         });
 
