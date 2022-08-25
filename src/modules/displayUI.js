@@ -43,12 +43,12 @@ export default function displayUI() {
         sidebarLinks.id = "sidebar-links";
 
         const today = document.createElement("li");
-        const todayLink = document.createElement("button")
+        const todayLink = document.createElement("button");
         todayLink.textContent = "Today";
         today.appendChild(todayLink);
 
         const projectList = document.createElement("li");
-        const projectListLink = document.createElement("button")
+        const projectListLink = document.createElement("button");
         projectListLink.textContent = "Projects";
         projectList.appendChild(projectListLink);
 
@@ -59,21 +59,26 @@ export default function displayUI() {
             let thisProject = document.createElement("li");
             thisProject.textContent = project.title;
             // display this project's tasks on click
-            thisProject.addEventListener('click', function (){console.log(project.taskList)});
+            thisProject.addEventListener("click", function () {
+                console.log(project.taskList);
+            });
             projectListList.appendChild(thisProject);
         });
-
 
         const newProject = document.createElement("li");
         newProject.textContent = "New Project";
         newProject.id = "newProjectButton";
+        newProject.addEventListener("click", function() {
+            projects.addProject(prompt("Project name?"))
+            console.log(projects);
+            displaySidebar(projects);
+        });
         projectListList.appendChild(newProject);
 
         const completed = document.createElement("li");
-        const completedLink = document.createElement("button")
+        const completedLink = document.createElement("button");
         completedLink.textContent = "Completed";
         completed.appendChild(completedLink);
-
 
         projectList.appendChild(projectListList);
         sidebarLinks.append(today, projectList, completed);
@@ -198,8 +203,6 @@ export default function displayUI() {
                 "lorem ipsum blablablabdlask jsdaklhjdkahjd sdklajhdkja",
         },
     ]);
-
-
 }
 
 /* <body>
