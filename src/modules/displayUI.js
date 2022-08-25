@@ -50,6 +50,14 @@ export default function displayUI() {
         const projectList = document.createElement("li");
         const projectListLink = document.createElement("button");
         projectListLink.textContent = "Projects";
+
+        projectListLink.addEventListener("click", () => {
+            document.body.removeChild(
+                document.getElementById("main-content")
+            );
+            displayMain("All Projects", projects.getAllTasks());
+        });
+
         projectList.appendChild(projectListLink);
 
         const projectListList = document.createElement("ul");
@@ -61,7 +69,9 @@ export default function displayUI() {
             // display this project's tasks on click
             thisProject.addEventListener("click", function () {
                 // console.log(project.taskList);
-                document.body.removeChild(document.getElementById("main-content"));
+                document.body.removeChild(
+                    document.getElementById("main-content")
+                );
                 displayMain(project.title, project.taskList);
             });
             projectListList.appendChild(thisProject);
@@ -70,8 +80,8 @@ export default function displayUI() {
         const newProject = document.createElement("li");
         newProject.textContent = "New Project";
         newProject.id = "newProjectButton";
-        newProject.addEventListener("click", function() {
-            projects.addProject(prompt("Project name?"))
+        newProject.addEventListener("click", function () {
+            projects.addProject(prompt("Project name?"));
             console.log(projects);
             displaySidebar(projects);
         });
@@ -187,24 +197,8 @@ export default function displayUI() {
     displaySidebar(projects());
     displayAside();
     displayFooter();
-    displayMain("All Projects", [
-        {
-            title: "Do the thing",
-            due: "September 1, 2022",
-            description: "This is a sample project. Does it work?",
-        },
-        {
-            title: "Do the other thing",
-            due: "September 9, 2022",
-            description: "This is another sample project. It do work.",
-        },
-        {
-            title: "Do the last thing",
-            due: "September 23, 2022",
-            description:
-                "lorem ipsum blablablabdlask jsdaklhjdkahjd sdklajhdkja",
-        },
-    ]);
+    displayMain("All Projects", projects().getAllTasks());
+    console.log(projects().getAllTasks());
 }
 
 /* <body>
