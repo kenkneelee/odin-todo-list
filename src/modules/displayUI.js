@@ -43,27 +43,40 @@ export default function displayUI() {
         sidebarLinks.id = "sidebar-links";
 
         const today = document.createElement("li");
-        today.textContent = "Today";
+        const todayLink = document.createElement("button")
+        todayLink.textContent = "Today";
+        today.appendChild(todayLink);
 
         const projectList = document.createElement("li");
-        projectList.textContent = "Projects";
+        const projectListLink = document.createElement("button")
+        projectListLink.textContent = "Projects";
+        projectList.appendChild(projectListLink);
 
         const projectListList = document.createElement("ul");
 
         projects.forEach((project) => {
+            // create DOM element to list each project
             let thisProject = document.createElement("li");
             thisProject.textContent = project.title;
+            // display this project's tasks on click
+            thisProject.addEventListener('click', function (){console.log(project.taskList)});
             projectListList.appendChild(thisProject);
         });
 
-        const completed = document.createElement("li");
-        completed.textContent = "Completed";
 
         const newProject = document.createElement("li");
         newProject.textContent = "New Project";
+        newProject.id = "newProjectButton";
+        projectListList.appendChild(newProject);
+
+        const completed = document.createElement("li");
+        const completedLink = document.createElement("button")
+        completedLink.textContent = "Completed";
+        completed.appendChild(completedLink);
+
 
         projectList.appendChild(projectListList);
-        sidebarLinks.append(today, projectList, completed, newProject);
+        sidebarLinks.append(today, projectList, completed);
 
         const sidebarBottom = document.createElement("ul");
         sidebarBottom.id = "sidebar-bottom";
