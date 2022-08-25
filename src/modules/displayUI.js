@@ -60,7 +60,9 @@ export default function displayUI() {
             thisProject.textContent = project.title;
             // display this project's tasks on click
             thisProject.addEventListener("click", function () {
-                console.log(project.taskList);
+                // console.log(project.taskList);
+                document.body.removeChild(document.getElementById("main-content"));
+                displayMain(project.title, project.taskList);
             });
             projectListList.appendChild(thisProject);
         });
@@ -126,7 +128,7 @@ export default function displayUI() {
         document.body.appendChild(footer);
     };
 
-    const displayMain = function (cardArray) {
+    const displayMain = function (projectName, cardArray) {
         const mainContent = document.createElement("div");
         mainContent.id = "main-content";
 
@@ -135,7 +137,7 @@ export default function displayUI() {
 
         // temp, replace with project name
         const mainHeaderText = document.createElement("h2");
-        mainHeaderText.textContent = "All Projects";
+        mainHeaderText.textContent = projectName;
 
         const newTaskButton = document.createElement("button");
         newTaskButton.textContent = "New Task";
@@ -185,7 +187,7 @@ export default function displayUI() {
     displaySidebar(projects());
     displayAside();
     displayFooter();
-    displayMain([
+    displayMain("All Projects", [
         {
             title: "Do the thing",
             due: "September 1, 2022",
