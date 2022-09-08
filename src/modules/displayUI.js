@@ -1,6 +1,7 @@
 import notif_Bell from "../images/notif_Bell.svg";
 import { daysOfWeek } from "./week.js";
 import projects from "./projects";
+import Task from "./task";
 
 export default function displayUI() {
     const displayHeader = function (name, icon) {
@@ -52,9 +53,7 @@ export default function displayUI() {
         projectListLink.textContent = "Projects";
 
         projectListLink.addEventListener("click", () => {
-            document.body.removeChild(
-                document.getElementById("main-content")
-            );
+            document.body.removeChild(document.getElementById("main-content"));
             displayMain("All Projects", projects.getAllTasks());
         });
 
@@ -81,8 +80,10 @@ export default function displayUI() {
         newProject.textContent = "New Project";
         newProject.id = "newProjectButton";
         newProject.addEventListener("click", function () {
-            let newProjectName = prompt ("Project name?");
-            newProjectName ? projects.addProject (newProjectName) : console.log("Invalid project name!");
+            let newProjectName = prompt("Project name?");
+            newProjectName
+                ? projects.addProject(newProjectName)
+                : console.log("Invalid project name!");
             displaySidebar(projects);
         });
         projectListList.appendChild(newProject);
@@ -151,6 +152,14 @@ export default function displayUI() {
 
         const newTaskButton = document.createElement("button");
         newTaskButton.textContent = "New Task";
+
+        newTaskButton.addEventListener("click", () => {
+            console.log("New task for project: " + projectName);
+            console.log(cardArray);
+            cardArray.push(new Task(prompt("Title?"), prompt("Due?"), prompt("Description")))
+            console.log(cardArray);
+            displayMain(projectName, cardArray);
+        });
 
         mainHeader.append(mainHeaderText, newTaskButton);
 
