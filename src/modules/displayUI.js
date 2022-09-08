@@ -81,8 +81,8 @@ export default function displayUI() {
         newProject.textContent = "New Project";
         newProject.id = "newProjectButton";
         newProject.addEventListener("click", function () {
-            projects.addProject(prompt("Project name?"));
-            console.log(projects);
+            let newProjectName = prompt ("Project name?");
+            newProjectName ? projects.addProject (newProjectName) : console.log("Invalid project name!");
             displaySidebar(projects);
         });
         projectListList.appendChild(newProject);
@@ -198,7 +198,6 @@ export default function displayUI() {
     displayAside();
     displayFooter();
     displayMain("All Projects", projects().getAllTasks());
-    console.log(projects().getAllTasks());
 }
 
 /* <body>

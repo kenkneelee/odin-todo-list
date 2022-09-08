@@ -120,6 +120,7 @@ header {
 }
 ::-webkit-scrollbar {
     width: 0rem;
+    height: 0rem;
     background: rgba(128, 128, 128, 0.142);
 }
 
