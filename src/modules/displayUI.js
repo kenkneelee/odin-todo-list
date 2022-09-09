@@ -155,8 +155,16 @@ export default function displayUI() {
 
         newTaskButton.addEventListener("click", () => {
             console.log("New task for project: " + projectName);
+            console.log("Current tasklist for project:")
             console.log(cardArray);
-            cardArray.push(new Task(prompt("Title?"), prompt("Due?"), prompt("Description")))
+            
+            let newTaskName = prompt ("New task name?");
+            let newTaskDue = prompt ("New task due date?");
+            let newTaskDesc = prompt ("New task description?");
+
+            newTaskName && newTaskDue && newTaskDesc ? cardArray.push(new Task(newTaskName,newTaskDue, newTaskDesc)) : console.log("Please complete all fields!");
+
+            // cardArray.push(new Task(prompt("Title?"), prompt("Due?"), prompt("Description")))
             console.log(cardArray);
             displayMain(projectName, cardArray);
         });
