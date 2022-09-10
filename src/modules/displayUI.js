@@ -84,6 +84,7 @@ export default function displayUI() {
             newProjectName
                 ? projects.addProject(newProjectName)
                 : console.log("Invalid project name!");
+            document.body.removeChild(document.getElementById("sidebar"));
             displaySidebar(projects);
         });
         projectListList.appendChild(newProject);
@@ -153,23 +154,31 @@ export default function displayUI() {
         const newTaskButton = document.createElement("button");
         newTaskButton.textContent = "New Task";
 
-        newTaskButton.addEventListener("click", () => {
-            console.log("New task for project: " + projectName);
-            console.log("Current tasklist for project:")
-            console.log(cardArray);
-            
-            let newTaskName = prompt ("New task name?");
-            let newTaskDue = prompt ("New task due date?");
-            let newTaskDesc = prompt ("New task description?");
+        mainHeader.appendChild(mainHeaderText);
 
-            newTaskName && newTaskDue && newTaskDesc ? cardArray.push(new Task(newTaskName,newTaskDue, newTaskDesc)) : console.log("Please complete all fields!");
+        if (projectName !== "All Projects") {
+            newTaskButton.addEventListener("click", () => {
+                console.log("New task for project: " + projectName);
+                console.log("Current tasklist for project:");
+                console.log(cardArray);
 
-            // cardArray.push(new Task(prompt("Title?"), prompt("Due?"), prompt("Description")))
-            console.log(cardArray);
-            displayMain(projectName, cardArray);
-        });
+                let newTaskName = prompt("New task name?");
+                let newTaskDue = prompt("New task due date?");
+                let newTaskDesc = prompt("New task description?");
 
-        mainHeader.append(mainHeaderText, newTaskButton);
+                newTaskName && newTaskDue && newTaskDesc
+                    ? cardArray.push(
+                          new Task(newTaskName, newTaskDue, newTaskDesc)
+                      )
+                    : console.log("Please complete all fields!");
+
+                // cardArray.push(new Task(prompt("Title?"), prompt("Due?"), prompt("Description")))
+                console.log(cardArray);
+                document.body.removeChild(document.getElementById("main-content"))
+                displayMain(projectName, cardArray);
+            });
+            mainHeader.appendChild(newTaskButton)
+        }
 
         // card stuff
         const cards = document.createElement("div");
