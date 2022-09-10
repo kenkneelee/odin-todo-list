@@ -174,10 +174,12 @@ export default function displayUI() {
 
                 // cardArray.push(new Task(prompt("Title?"), prompt("Due?"), prompt("Description")))
                 console.log(cardArray);
-                document.body.removeChild(document.getElementById("main-content"))
+                document.body.removeChild(
+                    document.getElementById("main-content")
+                );
                 displayMain(projectName, cardArray);
             });
-            mainHeader.appendChild(newTaskButton)
+            mainHeader.appendChild(newTaskButton);
         }
 
         // card stuff
@@ -201,8 +203,19 @@ export default function displayUI() {
             const cardButtons = document.createElement("div");
             const archiveButton = document.createElement("button");
             archiveButton.textContent = "Archive";
+
+            // delete button stuff
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Delete";
+            deleteButton.addEventListener("click", () => {
+                console.log(cardArray);
+                console.log("This card has index " + cardArray.indexOf(cardObject));
+                cardArray.splice(cardArray.indexOf(cardObject), 1);
+                document.body.removeChild(document.getElementById("main-content"));
+                displayMain(projectName, cardArray);
+            })
+
+
             cardButtons.append(archiveButton, deleteButton);
 
             cardHeader.append(cardSpan, cardButtons);
