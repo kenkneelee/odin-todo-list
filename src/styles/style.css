@@ -160,6 +160,7 @@ header {
 .cardHeader {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 /* Right side stuff */

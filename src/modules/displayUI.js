@@ -10,10 +10,10 @@ export default function displayUI() {
         // >app logo and title (left)
         const logo = document.createElement("h1");
         logo.textContent = "To-Do";
-        // >right side container
+        // >right side flex container
         const notifications = document.createElement("div");
         notifications.id = "notifications";
-
+        // >> notification bell section
         const notifBell = document.createElement("img");
         notifBell.id = "notifBell";
         notifBell.src = notif_Bell;
@@ -42,25 +42,23 @@ export default function displayUI() {
         // >sidebar links
         const sidebarLinks = document.createElement("ul");
         sidebarLinks.id = "sidebar-links";
-
+        // link for projects with due date: today
         const today = document.createElement("li");
         const todayLink = document.createElement("button");
         todayLink.textContent = "Today";
         today.appendChild(todayLink);
-
+        // project list container
         const projectList = document.createElement("li");
+        // "all projects" header link
         const projectListLink = document.createElement("button");
         projectListLink.textContent = "Projects";
-
         projectListLink.addEventListener("click", () => {
             document.body.removeChild(document.getElementById("main-content"));
             displayMain("All Projects", projects.getAllTasks());
         });
-
         projectList.appendChild(projectListLink);
-
+        // list of projects and links to them
         const projectListList = document.createElement("ul");
-
         projects.forEach((project) => {
             // create DOM element to list each project
             let thisProject = document.createElement("li");
@@ -75,7 +73,7 @@ export default function displayUI() {
             });
             projectListList.appendChild(thisProject);
         });
-
+        // new project button
         const newProject = document.createElement("li");
         newProject.textContent = "New Project";
         newProject.id = "newProjectButton";
@@ -89,6 +87,7 @@ export default function displayUI() {
         });
         projectListList.appendChild(newProject);
 
+        // completed projects button 
         const completed = document.createElement("li");
         const completedLink = document.createElement("button");
         completedLink.textContent = "Completed";
@@ -97,6 +96,7 @@ export default function displayUI() {
         projectList.appendChild(projectListList);
         sidebarLinks.append(today, projectList, completed);
 
+        // settings and logout buttons
         const sidebarBottom = document.createElement("ul");
         sidebarBottom.id = "sidebar-bottom";
         const settings = document.createElement("li");
@@ -150,11 +150,11 @@ export default function displayUI() {
         // temp, replace with project name
         const mainHeaderText = document.createElement("h2");
         mainHeaderText.textContent = projectName;
+        mainHeader.appendChild(mainHeaderText); 
 
+        // new task button
         const newTaskButton = document.createElement("button");
         newTaskButton.textContent = "New Task";
-
-        mainHeader.appendChild(mainHeaderText);
 
         if (projectName !== "All Projects") {
             newTaskButton.addEventListener("click", () => {
@@ -166,6 +166,7 @@ export default function displayUI() {
                 let newTaskDue = prompt("New task due date?");
                 let newTaskDesc = prompt("New task description?");
 
+                // replace with project method
                 newTaskName && newTaskDue && newTaskDesc
                     ? cardArray.push(
                           new Task(newTaskName, newTaskDue, newTaskDesc)
@@ -174,6 +175,7 @@ export default function displayUI() {
 
                 // cardArray.push(new Task(prompt("Title?"), prompt("Due?"), prompt("Description")))
                 console.log(cardArray);
+                //refreshMain
                 document.body.removeChild(
                     document.getElementById("main-content")
                 );
@@ -197,7 +199,7 @@ export default function displayUI() {
             cardSpan.textContent = cardObject.title;
             const cardCheckbox = document.createElement("input");
             cardCheckbox.type = "checkbox";
-            cardCheckbox.checked = "checked";
+            // cardCheckbox.checked = "checked";
             cardSpan.prepend(cardCheckbox);
 
             const cardButtons = document.createElement("div");
@@ -215,9 +217,7 @@ export default function displayUI() {
                 displayMain(projectName, cardArray);
             })
 
-
             cardButtons.append(archiveButton, deleteButton);
-
             cardHeader.append(cardSpan, cardButtons);
 
             const dueDate = document.createElement("p");
