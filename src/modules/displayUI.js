@@ -5,6 +5,7 @@ import Project from "./project";
 import Task from "./task";
 
 export default function displayUI() {
+    // display header, will take loggin in user object as input
     const displayHeader = function (name, icon) {
         // header container
         const header = document.createElement("header");
@@ -36,6 +37,7 @@ export default function displayUI() {
         document.body.appendChild(header);
     };
 
+    // display sidebar, accepts array of projects as input
     const displaySidebar = function (projects) {
         // sidebar container
         const sidebar = document.createElement("div");
@@ -55,23 +57,26 @@ export default function displayUI() {
         projectListLink.textContent = "Projects";
         projectListLink.addEventListener("click", () => {
             document.body.removeChild(document.getElementById("main-content"));
+            projects.updateAll();
             displayMain(projects[0]);
         });
         projectList.appendChild(projectListLink);
         // list of projects and links to them
         const projectListList = document.createElement("ul");
         projects.forEach((project) => {
-            // create DOM element to list each project
-            let thisProject = document.createElement("li");
-            thisProject.textContent = project.title;
-            // display this project's tasks on click
-            thisProject.addEventListener("click", function () {
-                document.body.removeChild(
-                    document.getElementById("main-content")
-                );
-                displayMain(project);
-            });
-            projectListList.appendChild(thisProject);
+            if (project.title !== "All Projects") {
+                // create DOM element to list each project
+                let thisProject = document.createElement("li");
+                thisProject.textContent = project.title;
+                // display this project's tasks on click
+                thisProject.addEventListener("click", function () {
+                    document.body.removeChild(
+                        document.getElementById("main-content")
+                    );
+                    displayMain(project);
+                });
+                projectListList.appendChild(thisProject);
+            }
         });
         // new project button
         const newProject = document.createElement("li");
@@ -82,6 +87,7 @@ export default function displayUI() {
             newProjectName
                 ? projects.addProject(newProjectName)
                 : console.log("Invalid project name!");
+                // refreshSidebar
             document.body.removeChild(document.getElementById("sidebar"));
             displaySidebar(projects);
         });
@@ -109,6 +115,7 @@ export default function displayUI() {
         document.body.appendChild(sidebar);
     };
 
+    // display days of the week on right sidebar
     const displayAside = function () {
         const aside = document.createElement("div");
         aside.id = "aside";
@@ -128,6 +135,7 @@ export default function displayUI() {
         document.body.appendChild(aside);
     };
 
+    // display footer with credits
     const displayFooter = function () {
         const footer = document.createElement("footer");
         const footerText = document.createElement("p");
@@ -140,39 +148,28 @@ export default function displayUI() {
         document.body.appendChild(footer);
     };
 
+    // display main content section, take project object as input
     const displayMain = function (project) {
+        // section container
         const mainContent = document.createElement("div");
         mainContent.id = "main-content";
-
+        // header section
         const mainHeader = document.createElement("div");
         mainHeader.id = "main-header";
-
-        // temp, replace with project name
         const mainHeaderText = document.createElement("h2");
         mainHeaderText.textContent = project.title;
         mainHeader.appendChild(mainHeaderText);
-
         // new task button
-        const newTaskButton = document.createElement("button");
-        newTaskButton.textContent = "New Task";
-
         if (project.title !== "All Projects") {
+            const newTaskButton = document.createElement("button");
+            newTaskButton.textContent = "New Task";
             newTaskButton.addEventListener("click", () => {
-                console.log("New task for project: " + project.title);
-                console.log("Current tasklist for project:");
-                console.log(project.taskList);
-
                 let newTaskName = prompt("New task name?");
                 let newTaskDue = prompt("New task due date?");
                 let newTaskDesc = prompt("New task description?");
-
-                console.log(project.taskList);
-
                 newTaskName && newTaskDue && newTaskDesc
                     ? project.addTask(newTaskName, newTaskDue, newTaskDesc)
                     : console.log("Please complete all fields!");
-
-
                 //refreshMain
                 document.body.removeChild(
                     document.getElementById("main-content")
@@ -195,21 +192,27 @@ export default function displayUI() {
 
             const cardSpan = document.createElement("span");
             cardSpan.textContent = cardObject.title;
-            const cardCheckbox = document.createElement("input");
-            cardCheckbox.type = "checkbox";
-            // cardCheckbox.checked = "checked";
-            cardSpan.prepend(cardCheckbox);
 
+            // checkbox stuff
+            // const cardCheckbox = document.createElement("input");
+            // cardCheckbox.type = "checkbox";
+            // // cardCheckbox.checked = "checked";
+            // cardSpan.prepend(cardCheckbox);
+
+            // complete and delete buttons
             const cardButtons = document.createElement("div");
+            // complete button stuff
             const archiveButton = document.createElement("button");
-            archiveButton.textContent = "Archive";
+            archiveButton.textContent = "Complete";
 
             // delete button stuff
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Delete";
             deleteButton.addEventListener("click", () => {
-                project.taskList.splice(project.taskList.indexOf(cardObject), 1);
-
+                project.taskList.splice(
+                    project.taskList.indexOf(cardObject),
+                    1
+                );
                 // refreshMain
                 document.body.removeChild(
                     document.getElementById("main-content")

@@ -15,6 +15,12 @@ export default function projects() {
         return allTasks;
     };
 
+    projectArray.updateAll = function() {
+        projectArray[0].taskList = [];
+        projectArray[0].taskList = projectArray.getAllTasks();
+    }
+
+
     // sample projects and tasks
     projectArray.push(
         new Project("All Projects"),
@@ -41,6 +47,6 @@ export default function projects() {
     );
 
     projectArray[0].taskList = projectArray.getAllTasks();
-    
+
     return projectArray;
 }
