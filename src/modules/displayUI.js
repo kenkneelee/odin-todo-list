@@ -1,6 +1,7 @@
 import notif_Bell from "../images/notif_Bell.svg";
 import { daysOfWeek } from "./week.js";
 import projects from "./projects";
+import Project from "./project";
 import Task from "./task";
 
 export default function displayUI() {
@@ -54,7 +55,7 @@ export default function displayUI() {
         projectListLink.textContent = "Projects";
         projectListLink.addEventListener("click", () => {
             document.body.removeChild(document.getElementById("main-content"));
-            displayMain("All Projects", projects.getAllTasks());
+            displayMain(projects[0]);
         });
         projectList.appendChild(projectListLink);
         // list of projects and links to them
@@ -65,11 +66,10 @@ export default function displayUI() {
             thisProject.textContent = project.title;
             // display this project's tasks on click
             thisProject.addEventListener("click", function () {
-                // console.log(project.taskList);
                 document.body.removeChild(
                     document.getElementById("main-content")
                 );
-                displayMain(project.title, project.taskList);
+                displayMain(project);
             });
             projectListList.appendChild(thisProject);
         });
@@ -87,7 +87,7 @@ export default function displayUI() {
         });
         projectListList.appendChild(newProject);
 
-        // completed projects button 
+        // completed projects button
         const completed = document.createElement("li");
         const completedLink = document.createElement("button");
         completedLink.textContent = "Completed";
@@ -140,7 +140,7 @@ export default function displayUI() {
         document.body.appendChild(footer);
     };
 
-    const displayMain = function (projectName, cardArray) {
+    const displayMain = function (project) {
         const mainContent = document.createElement("div");
         mainContent.id = "main-content";
 
@@ -149,37 +149,35 @@ export default function displayUI() {
 
         // temp, replace with project name
         const mainHeaderText = document.createElement("h2");
-        mainHeaderText.textContent = projectName;
-        mainHeader.appendChild(mainHeaderText); 
+        mainHeaderText.textContent = project.title;
+        mainHeader.appendChild(mainHeaderText);
 
         // new task button
         const newTaskButton = document.createElement("button");
         newTaskButton.textContent = "New Task";
 
-        if (projectName !== "All Projects") {
+        if (project.title !== "All Projects") {
             newTaskButton.addEventListener("click", () => {
-                console.log("New task for project: " + projectName);
+                console.log("New task for project: " + project.title);
                 console.log("Current tasklist for project:");
-                console.log(cardArray);
+                console.log(project.taskList);
 
                 let newTaskName = prompt("New task name?");
                 let newTaskDue = prompt("New task due date?");
                 let newTaskDesc = prompt("New task description?");
 
-                // replace with project method
+                console.log(project.taskList);
+
                 newTaskName && newTaskDue && newTaskDesc
-                    ? cardArray.push(
-                          new Task(newTaskName, newTaskDue, newTaskDesc)
-                      )
+                    ? project.addTask(newTaskName, newTaskDue, newTaskDesc)
                     : console.log("Please complete all fields!");
 
-                // cardArray.push(new Task(prompt("Title?"), prompt("Due?"), prompt("Description")))
-                console.log(cardArray);
+
                 //refreshMain
                 document.body.removeChild(
                     document.getElementById("main-content")
                 );
-                displayMain(projectName, cardArray);
+                displayMain(project);
             });
             mainHeader.appendChild(newTaskButton);
         }
@@ -188,7 +186,7 @@ export default function displayUI() {
         const cards = document.createElement("div");
         cards.id = "cards";
 
-        cardArray.forEach((cardObject) => {
+        project.taskList.forEach((cardObject) => {
             const card = document.createElement("div");
             card.classList.add("card");
 
@@ -210,12 +208,14 @@ export default function displayUI() {
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Delete";
             deleteButton.addEventListener("click", () => {
-                console.log(cardArray);
-                console.log("This card has index " + cardArray.indexOf(cardObject));
-                cardArray.splice(cardArray.indexOf(cardObject), 1);
-                document.body.removeChild(document.getElementById("main-content"));
-                displayMain(projectName, cardArray);
-            })
+                project.taskList.splice(project.taskList.indexOf(cardObject), 1);
+
+                // refreshMain
+                document.body.removeChild(
+                    document.getElementById("main-content")
+                );
+                displayMain(project);
+            });
 
             cardButtons.append(archiveButton, deleteButton);
             cardHeader.append(cardSpan, cardButtons);
@@ -236,7 +236,7 @@ export default function displayUI() {
     displaySidebar(projects());
     displayAside();
     displayFooter();
-    displayMain("All Projects", projects().getAllTasks());
+    displayMain(projects()[0]);
 }
 
 /* <body>

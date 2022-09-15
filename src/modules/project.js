@@ -9,4 +9,8 @@ export default class Project {
     addTask(title, due, description) {
         this.taskList.push(new Task(title, due, description));
     }
+
+    removeTask () {
+
+    }
 }
