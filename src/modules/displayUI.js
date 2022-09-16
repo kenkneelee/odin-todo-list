@@ -168,8 +168,9 @@ export default function displayUI() {
                 let newTaskDue = prompt("New task due date?");
                 let newTaskDesc = prompt("New task description?");
                 newTaskName && newTaskDue && newTaskDesc
-                    ? project.addTask(newTaskName, newTaskDue, newTaskDesc)
+                    ? project.addTask(project, newTaskName, newTaskDue, newTaskDesc)
                     : console.log("Please complete all fields!");
+                console.log(project.taskList);
                 //refreshMain
                 document.body.removeChild(
                     document.getElementById("main-content")
@@ -204,6 +205,10 @@ export default function displayUI() {
             // complete button stuff
             const archiveButton = document.createElement("button");
             archiveButton.textContent = "Complete";
+            archiveButton.addEventListener("click", () => {
+                console.log(cardObject.projectObject);
+            })
+
 
             // delete button stuff
             const deleteButton = document.createElement("button");

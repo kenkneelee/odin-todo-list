@@ -6,8 +6,8 @@ export default class Project {
         this.taskList = [];
     }
 
-    addTask(title, due, description) {
-        this.taskList.push(new Task(title, due, description));
+    addTask(projectObject, title, due, description) {
+        this.taskList.push(new Task(projectObject, title, due, description));
     }
 
     removeTask () {
