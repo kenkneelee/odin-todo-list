@@ -1,14 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Dosis&display=swap");
 
 /* Page layout stuff */
-
 * {
     box-sizing: border-box;
     font-family: "Dosis", sans-serif;
 }
+
 html {
     font-size: clamp(12px, calc(0.625rem + ((1vw - 10.8px) * 0.9259)), 20px);
 }
+
 body {
     display: grid;
     grid-template-areas:
@@ -22,7 +23,6 @@ body {
 }
 
 /* Header stuff */
-
 header {
     grid-area: header;
     display: flex;
@@ -67,42 +67,36 @@ header {
 
 #sidebar-links > li > button {
     cursor: pointer;
-    width:100%;
+    width: 100%;
     background-color: transparent;
     color: #c0c0c0;
     font-size: 1.2rem;
 }
 
-
-#sidebar-links>li > ul > li {
-    cursor:pointer;
-    list-style-type: none;
+#sidebar-links > li > ul > li {
+    cursor: pointer;
     text-align: center;
     padding: 1rem 0;
     background-color: #c0c0c023;
 }
 
-
-#sidebar-links>li > ul > li:hover {
+#sidebar-links > li > ul > li:hover {
     background-color: #c0c0c068;
 }
 
-#sidebar-links>li > ul > #newProjectButton {
+#sidebar-links > li > ul > #newProjectButton {
     background-color: #bbffc223;
 }
 
-#sidebar-links>li > ul > #newProjectButton:hover {
+#sidebar-links > li > ul > #newProjectButton:hover {
     background-color: #bbffc246;
 }
-
 
 #sidebar-links ul {
     padding: 0;
     max-height: 40vh;
-    overflow:scroll;
+    overflow: scroll;
 }
-
-
 
 #sidebar-bottom {
     list-style: none;
@@ -119,7 +113,7 @@ header {
     color: #1f2c36;
 }
 ::-webkit-scrollbar {
-    width: 0rem;
+    width: 0.5rem;
     height: 0rem;
     background: rgba(128, 128, 128, 0.142);
 }
@@ -172,12 +166,9 @@ header {
     padding: 0.5rem;
 }
 
-#aside ul {
-    padding: 0;
-    list-style-type: none;
-}
 
 #calendar {
+    padding:0;
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -210,10 +201,6 @@ footer {
 footer p a {
     color: #c0c0c0;
 }
-
-
-
-
 
 #sidebar,
 header,
