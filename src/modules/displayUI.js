@@ -87,7 +87,7 @@ export default function displayUI() {
             newProjectName
                 ? projects.addProject(newProjectName)
                 : console.log("Invalid project name!");
-                // refreshSidebar
+            // refreshSidebar
             document.body.removeChild(document.getElementById("sidebar"));
             displaySidebar(projects);
         });
@@ -168,7 +168,12 @@ export default function displayUI() {
                 let newTaskDue = prompt("New task due date?");
                 let newTaskDesc = prompt("New task description?");
                 newTaskName && newTaskDue && newTaskDesc
-                    ? project.addTask(project, newTaskName, newTaskDue, newTaskDesc)
+                    ? project.addTask(
+                          project,
+                          newTaskName,
+                          newTaskDue,
+                          newTaskDesc
+                      )
                     : console.log("Please complete all fields!");
                 console.log(project.taskList);
                 //refreshMain
@@ -207,17 +212,27 @@ export default function displayUI() {
             archiveButton.textContent = "Complete";
             archiveButton.addEventListener("click", () => {
                 console.log(cardObject.projectObject);
-            })
-
+            });
 
             // delete button stuff
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Delete";
             deleteButton.addEventListener("click", () => {
-                project.taskList.splice(
-                    project.taskList.indexOf(cardObject),
+                console.log(project);
+                cardObject.projectObject.taskList.splice(
+                    cardObject.projectObject.taskList.indexOf(cardObject),
                     1
                 );
+                projects.updateAll();
+                console.log(project);
+
+                const position = projects
+                    .map((e) => e.title)
+                    .indexOf(project.title);
+                console.log(projects[position]);
+                projects.updateProject(position, project);
+                console.log(projects);
+
                 // refreshMain
                 document.body.removeChild(
                     document.getElementById("main-content")
@@ -240,11 +255,41 @@ export default function displayUI() {
         document.body.appendChild(mainContent);
     };
 
+    projects.push(
+        new Project("All Projects"),
+        new Project("Code"),
+        new Project("Exercise"),
+        new Project("Chores"),
+        new Project("Games")
+    );
+
+    projects[1].addTask(
+        projects[1],
+        "Finish to-do list project",
+        "As soon as possible",
+        "Finish module organization, connect calendar, the rest of the dang project."
+    );
+    projects[2].addTask(
+        projects[2],
+        "Go on a walk",
+        "Everyday",
+        "Stop sitting all day and go for a walk."
+    );
+    projects[3].addTask(projects[3], "Sleep", "All day", "All day every day.");
+    projects[4].addTask(
+        projects[4],
+        "Prepare for raid",
+        "Next Friday",
+        "Prepare gearsets, restock consumables, confirm roster."
+    );
+
+    projects.updateAll();
+
     displayHeader("Ken");
-    displaySidebar(projects());
+    displaySidebar(projects);
     displayAside();
     displayFooter();
-    displayMain(projects()[0]);
+    displayMain(projects[0]);
 }
 
 /* <body>
