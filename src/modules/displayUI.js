@@ -49,6 +49,12 @@ export default function displayUI() {
         const today = document.createElement("li");
         const todayLink = document.createElement("button");
         todayLink.textContent = "Today";
+
+        // temp to display modal
+        todayLink.addEventListener("click", () => {
+            document.getElementsByClassName("modal")[0].style.display = "flex";
+        });
+
         today.appendChild(todayLink);
         // project list container
         const projectList = document.createElement("li");
@@ -150,6 +156,8 @@ export default function displayUI() {
 
     // display main content section, take project object as input
     const displayMain = function (project) {
+        
+        displayModal(project);
         // section container
         const mainContent = document.createElement("div");
         mainContent.id = "main-content";
@@ -254,6 +262,30 @@ export default function displayUI() {
         mainContent.append(mainHeader, cards);
         document.body.appendChild(mainContent);
     };
+
+    const displayModal = function (project) {
+        console.log("test display modal");
+        const modal = document.createElement("div");
+        modal.classList.add("modal");
+
+        const modalContent = document.createElement("div");
+        modalContent.classList.add("modal-content")
+        const closeModal = document.createElement("span");
+        closeModal.classList.add("close");
+        closeModal.textContent = "x";
+        const modalText = document.createElement("p");
+        modalText.textContent = "New task for project: " + project.title;
+        modalContent.append(closeModal, modalText);
+
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+          }
+    }
 
     projects.push(
         new Project("All Projects"),

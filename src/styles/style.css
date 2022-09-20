@@ -157,6 +157,29 @@ header {
     align-items: center;
 }
 
+
+/* Modal stuff */
+.modal {
+    display:none;
+    grid-area: 2/2/2/4;
+    z-index: 1;
+    padding-top: 5rem;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,0.8);
+    color:#c0c0c0;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content {
+    background-color:#304352;
+    margin: 15% auto;
+    padding: 2rem;
+    width:80%;
+    border-radius: 1rem;
+}
+
 /* Right side stuff */
 
 #aside {
