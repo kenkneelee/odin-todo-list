@@ -49,6 +49,25 @@ export default function displayUI() {
         const today = document.createElement("li");
         const todayLink = document.createElement("button");
         todayLink.textContent = "Today";
+        todayLink.addEventListener("click", () => {
+        // console.log(projects.getAllTasks());
+
+        // today stuff
+        console.log(projects.getAllTasks());
+        const todayTasks = projects.getAllTasks().filter(task => {
+            return task.due == new Date ().toISOString().split("T")[0];
+        })
+        console.log(todayTasks);
+
+        document.body.removeChild(document.getElementById("main-content"));
+        let todayProject = new Project ("Today");
+        todayProject.taskList = todayTasks;
+        console.log(todayProject);
+        displayMain(todayProject);
+        // displayMain(todayProject);
+        // projects.updateAll();
+        // console.log(projects[0]);
+        });
 
         today.appendChild(todayLink);
         // project list container
@@ -239,10 +258,25 @@ export default function displayUI() {
                 console.log(projects);
 
                 // refreshMain
+
+                // repeated today stuff, refactor later
+                if (project.title == "Today") {
+                    const todayTasks = projects.getAllTasks().filter(task => {
+                        return task.due == new Date ().toISOString().split("T")[0];
+                    })
+                    document.body.removeChild(document.getElementById("main-content"));
+                    let todayProject = new Project ("Today");
+                    todayProject.taskList = todayTasks;
+                    console.log(todayProject);
+                    displayMain(todayProject);
+                }
+
+                else {
                 document.body.removeChild(
                     document.getElementById("main-content")
                 );
                 displayMain(project);
+                }
             });
 
             cardButtons.append(archiveButton, deleteButton);

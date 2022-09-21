@@ -8,9 +8,14 @@ projectArray.addProject = function (name) {
 
 projectArray.getAllTasks = function () {
     let allTasks = [];
-    projectArray.forEach((project) => {
-        allTasks = allTasks.concat(project.taskList);
-    });
+    // exclude "all tasks" project
+    for (let i=1; i<projectArray.length; i++) {
+        allTasks = allTasks.concat(projectArray[i].taskList);
+    };
+
+    // projectArray.forEach((project) => {
+    //     allTasks = allTasks.concat(project.taskList);
+    // });
     return allTasks;
 };
 
