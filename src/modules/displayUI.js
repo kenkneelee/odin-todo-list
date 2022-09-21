@@ -275,9 +275,47 @@ export default function displayUI() {
         const closeModal = document.createElement("span");
         closeModal.classList.add("close");
         closeModal.textContent = "x";
-        const modalText = document.createElement("p");
-        modalText.textContent = "New task for project: " + project.title;
-        modalContent.append(closeModal, modalText);
+        const modalHead = document.createElement("h2");
+        modalHead.textContent = "New task for: " + project.title;
+        const modalForm = document.createElement("form");
+
+        const taskNameContainer = document.createElement("div");
+        const taskNameLabel = document.createElement("label");
+        taskNameLabel.htmlFor = "taskName";
+        taskNameLabel.textContent = "Task name:"
+        const taskNameField = document.createElement("input");
+        taskNameField.type = "text";
+        taskNameField.name = "taskName";
+        taskNameField.id = "taskName";
+        taskNameContainer.append (taskNameLabel, taskNameField);
+
+        const taskDateContainer = document.createElement("div");
+        const taskDateLabel = document.createElement("label");
+        taskDateLabel.htmlFor = "taskDue";
+        taskDateLabel.textContent = "Task due date:"
+        const taskDateField = document.createElement("input");
+        taskDateField.type = "date";
+        taskDateField.name = "taskDue";
+        taskDateField.id = "taskDue";
+        taskDateContainer.append(taskDateLabel, taskDateField);
+
+        const taskDescContainer = document.createElement("div");
+        const taskDescLabel = document.createElement("label");
+        taskDescLabel.htmlFor = "taskDesc";
+        taskDescLabel.textContent = "Task description"
+        const taskDescField = document.createElement("textarea");
+        taskDescField.name = "taskDesc";
+        taskDescField.id = "taskDesc";
+        taskDescContainer.append(taskDescLabel, taskDescField)
+        
+        const submitTask = document.createElement("button");
+        submitTask.type="button";
+        submitTask.textContent = "Submit new task";
+        submitTask.classList.add("submit");
+
+        modalForm.append(taskNameContainer, taskDateContainer, taskDescContainer, submitTask);
+
+        modalContent.append(closeModal, modalHead, modalForm);
 
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
