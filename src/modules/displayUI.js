@@ -50,11 +50,6 @@ export default function displayUI() {
         const todayLink = document.createElement("button");
         todayLink.textContent = "Today";
 
-        // temp to display modal
-        todayLink.addEventListener("click", () => {
-            document.getElementsByClassName("modal")[0].style.display = "flex";
-        });
-
         today.appendChild(todayLink);
         // project list container
         const projectList = document.createElement("li");
@@ -171,24 +166,27 @@ export default function displayUI() {
             const newTaskButton = document.createElement("button");
             newTaskButton.textContent = "New Task";
             newTaskButton.addEventListener("click", () => {
-                let newTaskName = prompt("New task name?");
-                let newTaskDue = prompt("New task due date?");
-                let newTaskDesc = prompt("New task description?");
-                newTaskName && newTaskDue && newTaskDesc
-                    ? project.addTask(
-                          project,
-                          newTaskName,
-                          newTaskDue,
-                          newTaskDesc
-                      )
-                    : console.log("Please complete all fields!");
-                console.log(project.taskList);
-                //refreshMain
-                document.body.removeChild(
-                    document.getElementById("main-content")
-                );
-                displayMain(project);
-            });
+                document.getElementsByClassName("modal")[0].style.display = "flex";
+            })
+            // newTaskButton.addEventListener("click", () => {
+            //     let newTaskName = prompt("New task name?");
+            //     let newTaskDue = prompt("New task due date?");
+            //     let newTaskDesc = prompt("New task description?");
+            //     newTaskName && newTaskDue && newTaskDesc
+            //         ? project.addTask(
+            //               project,
+            //               newTaskName,
+            //               newTaskDue,
+            //               newTaskDesc
+            //           )
+            //         : console.log("Please complete all fields!");
+            //     console.log(project.taskList);
+            //     //refreshMain
+            //     document.body.removeChild(
+            //         document.getElementById("main-content")
+            //     );
+            //     displayMain(project);
+            // });
             mainHeader.appendChild(newTaskButton);
         }
 
@@ -263,7 +261,6 @@ export default function displayUI() {
     };
 
     const displayModal = function (project) {
-        console.log("test display modal");
         document.getElementById("modal")?document.body.removeChild(document.getElementById("modal")):console.log("no modal existing");
 
         const modal = document.createElement("div");
@@ -282,7 +279,7 @@ export default function displayUI() {
         const taskNameContainer = document.createElement("div");
         const taskNameLabel = document.createElement("label");
         taskNameLabel.htmlFor = "taskName";
-        taskNameLabel.textContent = "Task name:"
+        taskNameLabel.textContent = "Task name*:"
         const taskNameField = document.createElement("input");
         taskNameField.type = "text";
         taskNameField.name = "taskName";
@@ -292,9 +289,11 @@ export default function displayUI() {
         const taskDateContainer = document.createElement("div");
         const taskDateLabel = document.createElement("label");
         taskDateLabel.htmlFor = "taskDue";
-        taskDateLabel.textContent = "Task due date:"
+        taskDateLabel.textContent = "Task due date*:"
         const taskDateField = document.createElement("input");
         taskDateField.type = "date";
+        taskDateField.min = new Date ().toISOString().split("T")[0];
+        taskDateField.value = new Date ().toISOString().split("T")[0];
         taskDateField.name = "taskDue";
         taskDateField.id = "taskDue";
         taskDateContainer.append(taskDateLabel, taskDateField);
@@ -312,6 +311,28 @@ export default function displayUI() {
         submitTask.type="button";
         submitTask.textContent = "Submit new task";
         submitTask.classList.add("submit");
+        submitTask.addEventListener("click", () => {
+            if (taskNameField.value.length !== 0 && taskDateField.value.length !==0) {
+            console.log(taskNameField.value);
+            console.log(taskDateField.value);
+            console.log(taskDescField.value);
+            project.addTask(project, taskNameField.value, taskDateField.value, taskDescField.value);
+            displayModal(project);
+            document.body.removeChild(
+                document.getElementById("main-content")
+            );
+            displayMain(project);
+            }
+            else {
+                document.getElementById("incomplete") ? modalForm.removeChild(document.getElementById("incomplete")) : console.log ("no");
+                const incomplete = document.createElement("div");
+                incomplete.textContent = "Please fill in all required fields"
+                incomplete.style.color = "red";
+                incomplete.style.alignSelf = "center";
+                incomplete.id="incomplete";
+                modalForm.append(incomplete);
+            }
+        })
 
         modalForm.append(taskNameContainer, taskDateContainer, taskDescContainer, submitTask);
 
@@ -323,6 +344,7 @@ export default function displayUI() {
         window.onclick = function(event) {
             if (event.target == modal) {
               modal.style.display = "none";
+              document.getElementById("incomplete") ? modalForm.removeChild(document.getElementById("incomplete")) : console.log ("no");
             }
           }
     }
@@ -338,7 +360,7 @@ export default function displayUI() {
     projects[1].addTask(
         projects[1],
         "Finish to-do list project",
-        "As soon as possible",
+        new Date().toISOString().split("T")[0],
         "Finish module organization, connect calendar, the rest of the dang project."
     );
     projects[2].addTask(

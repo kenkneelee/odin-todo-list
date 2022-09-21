@@ -7,7 +7,8 @@
 }
 
 html {
-    font-size: clamp(12px, calc(0.625rem + ((1vw - 10.8px) * 0.9259)), 20px);
+    /* font-size: clamp(12px, calc(0.625rem + ((1vw - 10.8px) * 0.9259)), 18px); */
+    font-size: clamp(16px, calc(1vw - 1rem), 24px);
 }
 
 body {
@@ -178,7 +179,7 @@ header {
 
     background-color:#304352;
     padding: 2rem;
-    width:60%;
+    width:40%;
     border-radius: 1rem;
 }
 
