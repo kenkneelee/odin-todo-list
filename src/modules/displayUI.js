@@ -156,7 +156,6 @@ export default function displayUI() {
 
     // display main content section, take project object as input
     const displayMain = function (project) {
-        
         displayModal(project);
         // section container
         const mainContent = document.createElement("div");
@@ -265,7 +264,10 @@ export default function displayUI() {
 
     const displayModal = function (project) {
         console.log("test display modal");
+        document.getElementById("modal")?document.body.removeChild(document.getElementById("modal")):console.log("no modal existing");
+
         const modal = document.createElement("div");
+        modal.id = "modal";
         modal.classList.add("modal");
 
         const modalContent = document.createElement("div");
