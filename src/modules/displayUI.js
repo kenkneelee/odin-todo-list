@@ -140,7 +140,9 @@ export default function displayUI() {
 
     // display days of the week on right sidebar
     const displayAside = function () {
-        document.getElementById("aside") ? document.body.removeChild(document.getElementById("aside")) : console.log("no existing aside to remove");
+        document.getElementById("aside")
+            ? document.body.removeChild(document.getElementById("aside"))
+            : console.log("no existing aside to remove");
         const aside = document.createElement("div");
         aside.id = "aside";
         const asideHeader = document.createElement("h2");
@@ -154,24 +156,29 @@ export default function displayUI() {
             day.classList.add("calendarDay");
             const dayLabel = document.createElement("span");
             dayLabel.textContent = format(a, "E d");
-            dayLabel.style.textDecoration = "underline"
+            dayLabel.style.textDecoration = "underline";
 
             // console.log(projects.getAllTasks().filter(task => {
             //     return (task.due) == a;
             // }));
 
-            day.append(dayLabel)
+            day.append(dayLabel);
 
             const matches = projects.getAllTasks().filter((task) => {
                 return task.due == a.toISOString().split("T")[0];
             });
 
             if (matches.length !== 0) {
-                for (let i=0; i<matches.length; i++) {
+                matches.forEach((match) => {
                     const matchText = document.createElement("p");
-                    matchText.textContent=matches[i].title;
+                    matchText.textContent = match.title;
                     day.append(matchText);
-                }
+                });
+                // for (let i = 0; i < matches.length; i++) {
+                //     const matchText = document.createElement("p");
+                //     matchText.textContent = matches[i].title;
+                //     day.append(matchText);
+                // }
             }
             calendar.appendChild(day);
         });
