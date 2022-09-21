@@ -2,15 +2,24 @@ import format from "date-fns/format";
 import add from "date-fns/add";
 import eachDayOfInterval from "date-fns/eachDayOfInterval";
 
-export function daysOfWeek () {
+export function daysOfWeek() {
     const today = new Date();
-    console.log (today);
+    console.log(today);
     const thisWeek = eachDayOfInterval({
         start: today,
-        end: add(today, {days:6})
-    })
-    const formattedThisWeek = thisWeek.map(day => {
+        end: add(today, { days: 6 }),
+    });
+    console.log(
+        thisWeek.map((day) => {
+            return day.toISOString().split("T")[0];
+        })
+    );
+    const formattedThisWeek = thisWeek.map((day) => {
         return format(day, "E d");
-    })
-    return (formattedThisWeek);
+    });
+    return thisWeek
+    // .map((day) => {
+    //     return day.toISOString().split("T")[0];
+    // });
+    // return formattedThisWeek;
 }

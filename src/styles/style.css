@@ -226,7 +226,7 @@ header {
 }
 
 .calendarDay {
-    padding: 1rem;
+    padding: 0.5rem;
     background: #efefef;
     border: none;
     border-radius: 0.5rem;
@@ -238,6 +238,10 @@ header {
     /* box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
         -6px -6px 10px rgba(255, 255, 255, 0.5),
         6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15); */
+}
+
+.calendarDay > p {
+    margin: 0;
 }
 
 /* Footer stuff */

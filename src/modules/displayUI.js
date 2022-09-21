@@ -4,6 +4,9 @@ import projects from "./projects";
 import Project from "./project";
 import Task from "./task";
 
+import format from "date-fns/format";
+import addDays from "date-fns/addDays";
+
 export default function displayUI() {
     // display header, will take loggin in user object as input
     const displayHeader = function (name, icon) {
@@ -50,23 +53,23 @@ export default function displayUI() {
         const todayLink = document.createElement("button");
         todayLink.textContent = "Today";
         todayLink.addEventListener("click", () => {
-        // console.log(projects.getAllTasks());
+            // console.log(projects.getAllTasks());
 
-        // today stuff
-        console.log(projects.getAllTasks());
-        const todayTasks = projects.getAllTasks().filter(task => {
-            return task.due == new Date ().toISOString().split("T")[0];
-        })
-        console.log(todayTasks);
+            // today stuff
+            console.log(projects.getAllTasks());
+            const todayTasks = projects.getAllTasks().filter((task) => {
+                return task.due == new Date().toISOString().split("T")[0];
+            });
+            console.log(todayTasks);
 
-        document.body.removeChild(document.getElementById("main-content"));
-        let todayProject = new Project ("Today");
-        todayProject.taskList = todayTasks;
-        console.log(todayProject);
-        displayMain(todayProject);
-        // displayMain(todayProject);
-        // projects.updateAll();
-        // console.log(projects[0]);
+            document.body.removeChild(document.getElementById("main-content"));
+            let todayProject = new Project("Today");
+            todayProject.taskList = todayTasks;
+            console.log(todayProject);
+            displayMain(todayProject);
+            // displayMain(todayProject);
+            // projects.updateAll();
+            // console.log(projects[0]);
         });
 
         today.appendChild(todayLink);
@@ -137,6 +140,7 @@ export default function displayUI() {
 
     // display days of the week on right sidebar
     const displayAside = function () {
+        document.getElementById("aside") ? document.body.removeChild(document.getElementById("aside")) : console.log("no existing aside to remove");
         const aside = document.createElement("div");
         aside.id = "aside";
         const asideHeader = document.createElement("h2");
@@ -148,7 +152,27 @@ export default function displayUI() {
         days.forEach((a) => {
             const day = document.createElement("li");
             day.classList.add("calendarDay");
-            day.textContent = a;
+            const dayLabel = document.createElement("span");
+            dayLabel.textContent = format(a, "E d");
+            dayLabel.style.textDecoration = "underline"
+
+            // console.log(projects.getAllTasks().filter(task => {
+            //     return (task.due) == a;
+            // }));
+
+            day.append(dayLabel)
+
+            const matches = projects.getAllTasks().filter((task) => {
+                return task.due == a.toISOString().split("T")[0];
+            });
+
+            if (matches.length !== 0) {
+                for (let i=0; i<matches.length; i++) {
+                    const matchText = document.createElement("p");
+                    matchText.textContent=matches[i].title;
+                    day.append(matchText);
+                }
+            }
             calendar.appendChild(day);
         });
         aside.append(asideHeader, calendar);
@@ -185,8 +209,9 @@ export default function displayUI() {
             const newTaskButton = document.createElement("button");
             newTaskButton.textContent = "New Task";
             newTaskButton.addEventListener("click", () => {
-                document.getElementsByClassName("modal")[0].style.display = "flex";
-            })
+                document.getElementsByClassName("modal")[0].style.display =
+                    "flex";
+            });
             // newTaskButton.addEventListener("click", () => {
             //     let newTaskName = prompt("New task name?");
             //     let newTaskDue = prompt("New task due date?");
@@ -257,25 +282,29 @@ export default function displayUI() {
                 projects.updateProject(position, project);
                 console.log(projects);
 
-                // refreshMain
+                // refreshAside
+                displayAside();
 
+                // refreshMain
                 // repeated today stuff, refactor later
                 if (project.title == "Today") {
-                    const todayTasks = projects.getAllTasks().filter(task => {
-                        return task.due == new Date ().toISOString().split("T")[0];
-                    })
-                    document.body.removeChild(document.getElementById("main-content"));
-                    let todayProject = new Project ("Today");
+                    const todayTasks = projects.getAllTasks().filter((task) => {
+                        return (
+                            task.due == new Date().toISOString().split("T")[0]
+                        );
+                    });
+                    document.body.removeChild(
+                        document.getElementById("main-content")
+                    );
+                    let todayProject = new Project("Today");
                     todayProject.taskList = todayTasks;
                     console.log(todayProject);
                     displayMain(todayProject);
-                }
-
-                else {
-                document.body.removeChild(
-                    document.getElementById("main-content")
-                );
-                displayMain(project);
+                } else {
+                    document.body.removeChild(
+                        document.getElementById("main-content")
+                    );
+                    displayMain(project);
                 }
             });
 
@@ -295,14 +324,16 @@ export default function displayUI() {
     };
 
     const displayModal = function (project) {
-        document.getElementById("modal")?document.body.removeChild(document.getElementById("modal")):console.log("no modal existing");
+        document.getElementById("modal")
+            ? document.body.removeChild(document.getElementById("modal"))
+            : console.log("no modal existing");
 
         const modal = document.createElement("div");
         modal.id = "modal";
         modal.classList.add("modal");
 
         const modalContent = document.createElement("div");
-        modalContent.classList.add("modal-content")
+        modalContent.classList.add("modal-content");
         const closeModal = document.createElement("span");
         closeModal.classList.add("close");
         closeModal.textContent = "x";
@@ -313,21 +344,21 @@ export default function displayUI() {
         const taskNameContainer = document.createElement("div");
         const taskNameLabel = document.createElement("label");
         taskNameLabel.htmlFor = "taskName";
-        taskNameLabel.textContent = "Task name*:"
+        taskNameLabel.textContent = "Task name*:";
         const taskNameField = document.createElement("input");
         taskNameField.type = "text";
         taskNameField.name = "taskName";
         taskNameField.id = "taskName";
-        taskNameContainer.append (taskNameLabel, taskNameField);
+        taskNameContainer.append(taskNameLabel, taskNameField);
 
         const taskDateContainer = document.createElement("div");
         const taskDateLabel = document.createElement("label");
         taskDateLabel.htmlFor = "taskDue";
-        taskDateLabel.textContent = "Task due date*:"
+        taskDateLabel.textContent = "Task due date*:";
         const taskDateField = document.createElement("input");
         taskDateField.type = "date";
-        taskDateField.min = new Date ().toISOString().split("T")[0];
-        taskDateField.value = new Date ().toISOString().split("T")[0];
+        taskDateField.min = new Date().toISOString().split("T")[0];
+        taskDateField.value = new Date().toISOString().split("T")[0];
         taskDateField.name = "taskDue";
         taskDateField.id = "taskDue";
         taskDateContainer.append(taskDateLabel, taskDateField);
@@ -335,53 +366,74 @@ export default function displayUI() {
         const taskDescContainer = document.createElement("div");
         const taskDescLabel = document.createElement("label");
         taskDescLabel.htmlFor = "taskDesc";
-        taskDescLabel.textContent = "Task description"
+        taskDescLabel.textContent = "Task description";
         const taskDescField = document.createElement("textarea");
         taskDescField.name = "taskDesc";
         taskDescField.id = "taskDesc";
-        taskDescContainer.append(taskDescLabel, taskDescField)
-        
+        taskDescContainer.append(taskDescLabel, taskDescField);
+
         const submitTask = document.createElement("button");
-        submitTask.type="button";
+        submitTask.type = "button";
         submitTask.textContent = "Submit new task";
         submitTask.classList.add("submit");
         submitTask.addEventListener("click", () => {
-            if (taskNameField.value.length !== 0 && taskDateField.value.length !==0) {
-            console.log(taskNameField.value);
-            console.log(taskDateField.value);
-            console.log(taskDescField.value);
-            project.addTask(project, taskNameField.value, taskDateField.value, taskDescField.value);
-            displayModal(project);
-            document.body.removeChild(
-                document.getElementById("main-content")
-            );
-            displayMain(project);
-            }
-            else {
-                document.getElementById("incomplete") ? modalForm.removeChild(document.getElementById("incomplete")) : console.log ("no");
+            if (
+                taskNameField.value.length !== 0 &&
+                taskDateField.value.length !== 0
+            ) {
+                console.log(taskNameField.value);
+                console.log(taskDateField.value);
+                console.log(taskDescField.value);
+                project.addTask(
+                    project,
+                    taskNameField.value,
+                    taskDateField.value,
+                    taskDescField.value
+                );
+                displayModal(project);
+                document.body.removeChild(
+                    document.getElementById("main-content")
+                );
+                displayMain(project);
+                displayAside();
+            } else {
+                document.getElementById("incomplete")
+                    ? modalForm.removeChild(
+                          document.getElementById("incomplete")
+                      )
+                    : console.log("no");
                 const incomplete = document.createElement("div");
-                incomplete.textContent = "Please fill in all required fields"
+                incomplete.textContent = "Please fill in all required fields";
                 incomplete.style.color = "red";
                 incomplete.style.alignSelf = "center";
-                incomplete.id="incomplete";
+                incomplete.id = "incomplete";
                 modalForm.append(incomplete);
             }
-        })
+        });
 
-        modalForm.append(taskNameContainer, taskDateContainer, taskDescContainer, submitTask);
+        modalForm.append(
+            taskNameContainer,
+            taskDateContainer,
+            taskDescContainer,
+            submitTask
+        );
 
         modalContent.append(closeModal, modalHead, modalForm);
 
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target == modal) {
-              modal.style.display = "none";
-              document.getElementById("incomplete") ? modalForm.removeChild(document.getElementById("incomplete")) : console.log ("no");
+                modal.style.display = "none";
+                document.getElementById("incomplete")
+                    ? modalForm.removeChild(
+                          document.getElementById("incomplete")
+                      )
+                    : console.log("no");
             }
-          }
-    }
+        };
+    };
 
     projects.push(
         new Project("All Projects"),
@@ -400,14 +452,19 @@ export default function displayUI() {
     projects[2].addTask(
         projects[2],
         "Go on a walk",
-        "Everyday",
+        addDays(new Date(), 2).toISOString().split("T")[0],
         "Stop sitting all day and go for a walk."
     );
-    projects[3].addTask(projects[3], "Sleep", "All day", "All day every day.");
+    projects[3].addTask(
+        projects[3],
+        "Sleep",
+        addDays(new Date(), 4).toISOString().split("T")[0],
+        "All day every day."
+    );
     projects[4].addTask(
         projects[4],
         "Prepare for raid",
-        "Next Friday",
+        addDays(new Date(), 6).toISOString().split("T")[0],
         "Prepare gearsets, restock consumables, confirm roster."
     );
 
