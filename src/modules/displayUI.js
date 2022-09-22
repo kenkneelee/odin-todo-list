@@ -6,6 +6,9 @@ import Task from "./task";
 
 import format from "date-fns/format";
 import addDays from "date-fns/addDays";
+import parseISO from "date-fns/parseISO";
+import formatDistance from "date-fns/formatDistance";
+import isEqual from "date-fns/isEqual";
 
 export default function displayUI() {
     // display header, will take loggin in user object as input
@@ -58,7 +61,10 @@ export default function displayUI() {
             // today stuff
             console.log(projects.getAllTasks());
             const todayTasks = projects.getAllTasks().filter((task) => {
-                return task.due == new Date().toISOString().split("T")[0];
+                return isEqual(
+                    task.due,
+                    parseISO(format(new Date(), "yyyy-MM-dd"))
+                );
             });
             console.log(todayTasks);
 
@@ -165,7 +171,7 @@ export default function displayUI() {
             day.append(dayLabel);
 
             const matches = projects.getAllTasks().filter((task) => {
-                return task.due == a.toISOString().split("T")[0];
+                return isEqual(task.due, a);
             });
 
             if (matches.length !== 0) {
@@ -296,8 +302,9 @@ export default function displayUI() {
                 // repeated today stuff, refactor later
                 if (project.title == "Today") {
                     const todayTasks = projects.getAllTasks().filter((task) => {
-                        return (
-                            task.due == new Date().toISOString().split("T")[0]
+                        return isEqual(
+                            task.due,
+                            parseISO(format(new Date(), "yyyy-MM-dd"))
                         );
                     });
                     document.body.removeChild(
@@ -317,9 +324,9 @@ export default function displayUI() {
 
             cardButtons.append(archiveButton, deleteButton);
             cardHeader.append(cardSpan, cardButtons);
-
+            
             const dueDate = document.createElement("p");
-            dueDate.textContent = cardObject.due;
+            dueDate.textContent = format(cardObject.due, "MMMM dd");
             const description = document.createElement("p");
             description.textContent = cardObject.description;
 
@@ -394,7 +401,7 @@ export default function displayUI() {
                 project.addTask(
                     project,
                     taskNameField.value,
-                    taskDateField.value,
+                    parseISO(taskDateField.value),
                     taskDescField.value
                 );
                 displayModal(project);
@@ -453,25 +460,25 @@ export default function displayUI() {
     projects[1].addTask(
         projects[1],
         "Finish to-do list project",
-        new Date().toISOString().split("T")[0],
+        parseISO(format(new Date(), "yyyy-MM-dd")),
         "Finish module organization, connect calendar, the rest of the dang project."
     );
     projects[2].addTask(
         projects[2],
         "Go on a walk",
-        addDays(new Date(), 2).toISOString().split("T")[0],
+        parseISO(format(addDays(new Date(), 2), "yyyy-MM-dd")),
         "Stop sitting all day and go for a walk."
     );
     projects[3].addTask(
         projects[3],
         "Sleep",
-        addDays(new Date(), 4).toISOString().split("T")[0],
+        parseISO(format(addDays(new Date(), 4), "yyyy-MM-dd")),
         "All day every day."
     );
     projects[4].addTask(
         projects[4],
         "Prepare for raid",
-        addDays(new Date(), 6).toISOString().split("T")[0],
+        parseISO(format(addDays(new Date(), 5), "yyyy-MM-dd")),
         "Prepare gearsets, restock consumables, confirm roster."
     );
 
