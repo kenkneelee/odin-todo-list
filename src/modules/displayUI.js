@@ -218,7 +218,7 @@ export default function displayUI() {
         mainHeaderText.textContent = project.title;
         mainHeader.appendChild(mainHeaderText);
         // new task button
-        if (project.title !== "All Projects") {
+        if (project.title !== "All Projects" && project.title !== "Today" && project.title !=="Completed") {
             const newTaskButton = document.createElement("button");
             newTaskButton.textContent = "New Task";
             newTaskButton.addEventListener("click", () => {
@@ -324,7 +324,7 @@ export default function displayUI() {
 
             cardButtons.append(archiveButton, deleteButton);
             cardHeader.append(cardSpan, cardButtons);
-            
+
             const dueDate = document.createElement("p");
             dueDate.textContent = format(cardObject.due, "MMMM dd");
             const description = document.createElement("p");
@@ -371,8 +371,10 @@ export default function displayUI() {
         taskDateLabel.textContent = "Task due date*:";
         const taskDateField = document.createElement("input");
         taskDateField.type = "date";
-        taskDateField.min = new Date().toISOString().split("T")[0];
-        taskDateField.value = new Date().toISOString().split("T")[0];
+        taskDateField.min = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];//new Date().toISOString().split("T")[0];
+        // date currently changing because of timezone offset, fix this
+        console.log("task date field minimum date: " + taskDateField.min);
+        taskDateField.value = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
         taskDateField.name = "taskDue";
         taskDateField.id = "taskDue";
         taskDateContainer.append(taskDateLabel, taskDateField);
