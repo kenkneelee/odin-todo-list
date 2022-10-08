@@ -9,7 +9,7 @@ projectArray.addProject = function (name) {
 projectArray.getAllTasks = function () {
     let allTasks = [];
     // exclude "all tasks" project
-    for (let i=1; i<projectArray.length; i++) {
+    for (let i=2; i<projectArray.length; i++) {
         allTasks = allTasks.concat(projectArray[i].taskList);
     };
 

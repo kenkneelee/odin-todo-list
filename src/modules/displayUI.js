@@ -305,7 +305,29 @@ export default function displayUI() {
                 console.log(projects[position]);
                 projects.updateProject(position, project);
                 console.log(projects);
-                displayMain(project);
+                displayAside();
+                // refreshMain
+                // repeated today stuff, refactor later
+                if (project.title == "Today") {
+                    const todayTasks = projects.getAllTasks().filter((task) => {
+                        return isEqual(
+                            task.due,
+                            parseISO(format(new Date(), "yyyy-MM-dd"))
+                        );
+                    });
+                    document.body.removeChild(
+                        document.getElementById("main-content")
+                    );
+                    let todayProject = new Project("Today");
+                    todayProject.taskList = todayTasks;
+                    console.log(todayProject);
+                    displayMain(todayProject);
+                } else {
+                    document.body.removeChild(
+                        document.getElementById("main-content")
+                    );
+                    displayMain(project);
+                }
             });
 
             // delete button stuff
