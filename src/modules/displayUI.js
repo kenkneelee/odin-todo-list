@@ -93,7 +93,10 @@ export default function displayUI() {
         // list of projects and links to them
         const projectListList = document.createElement("ul");
         projects.forEach((project) => {
-            if (project.title !== "All Projects") {
+            if (
+                project.title !== "All Projects" &&
+                project.title !== "Completed"
+            ) {
                 // create DOM element to list each project
                 let thisProject = document.createElement("li");
                 thisProject.textContent = project.title;
@@ -126,6 +129,11 @@ export default function displayUI() {
         const completed = document.createElement("li");
         const completedLink = document.createElement("button");
         completedLink.textContent = "Completed";
+        completedLink.addEventListener("click", () => {
+            document.body.removeChild(document.getElementById("main-content"));
+            displayMain(projects[1]);
+        });
+
         completed.appendChild(completedLink);
 
         projectList.appendChild(projectListList);
@@ -218,7 +226,11 @@ export default function displayUI() {
         mainHeaderText.textContent = project.title;
         mainHeader.appendChild(mainHeaderText);
         // new task button
-        if (project.title !== "All Projects" && project.title !== "Today" && project.title !=="Completed") {
+        if (
+            project.title !== "All Projects" &&
+            project.title !== "Today" &&
+            project.title !== "Completed"
+        ) {
             const newTaskButton = document.createElement("button");
             newTaskButton.textContent = "New Task";
             newTaskButton.addEventListener("click", () => {
@@ -273,7 +285,27 @@ export default function displayUI() {
             const archiveButton = document.createElement("button");
             archiveButton.textContent = "Complete";
             archiveButton.addEventListener("click", () => {
+                console.log("Current project is: ");
                 console.log(cardObject.projectObject);
+                console.log("Completed projects tasklist is:");
+                console.log(projects[1].taskList);
+                projects[1].taskList.push(
+                    cardObject.projectObject.taskList.splice(
+                        cardObject.projectObject.taskList.indexOf(cardObject),
+                        1
+                    )[0]
+                );
+                projects.updateAll();
+                console.log(project);
+                console.log(projects[1]);
+
+                const position = projects
+                    .map((e) => e.title)
+                    .indexOf(project.title);
+                console.log(projects[position]);
+                projects.updateProject(position, project);
+                console.log(projects);
+                displayMain(project);
             });
 
             // delete button stuff
@@ -322,7 +354,10 @@ export default function displayUI() {
                 }
             });
 
+            if (project.title !== "Completed") {
             cardButtons.append(archiveButton, deleteButton);
+            }
+            else {cardButtons.append(deleteButton)};
             cardHeader.append(cardSpan, cardButtons);
 
             const dueDate = document.createElement("p");
@@ -371,10 +406,18 @@ export default function displayUI() {
         taskDateLabel.textContent = "Task due date*:";
         const taskDateField = document.createElement("input");
         taskDateField.type = "date";
-        taskDateField.min = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];//new Date().toISOString().split("T")[0];
+        taskDateField.min = new Date(
+            new Date().getTime() - new Date().getTimezoneOffset() * 60000
+        )
+            .toISOString()
+            .split("T")[0]; //new Date().toISOString().split("T")[0];
         // date currently changing because of timezone offset, fix this
         console.log("task date field minimum date: " + taskDateField.min);
-        taskDateField.value = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+        taskDateField.value = new Date(
+            new Date().getTime() - new Date().getTimezoneOffset() * 60000
+        )
+            .toISOString()
+            .split("T")[0];
         taskDateField.name = "taskDue";
         taskDateField.id = "taskDue";
         taskDateContainer.append(taskDateLabel, taskDateField);
@@ -453,32 +496,33 @@ export default function displayUI() {
 
     projects.push(
         new Project("All Projects"),
+        new Project("Completed"),
         new Project("Code"),
         new Project("Exercise"),
         new Project("Chores"),
         new Project("Games")
     );
 
-    projects[1].addTask(
-        projects[1],
+    projects[2].addTask(
+        projects[2],
         "Finish to-do list project",
         parseISO(format(new Date(), "yyyy-MM-dd")),
         "Finish module organization, connect calendar, the rest of the dang project."
     );
-    projects[2].addTask(
-        projects[2],
+    projects[3].addTask(
+        projects[3],
         "Go on a walk",
         parseISO(format(addDays(new Date(), 2), "yyyy-MM-dd")),
         "Stop sitting all day and go for a walk."
     );
-    projects[3].addTask(
-        projects[3],
+    projects[4].addTask(
+        projects[4],
         "Sleep",
         parseISO(format(addDays(new Date(), 4), "yyyy-MM-dd")),
         "All day every day."
     );
-    projects[4].addTask(
-        projects[4],
+    projects[5].addTask(
+        projects[5],
         "Prepare for raid",
         parseISO(format(addDays(new Date(), 5), "yyyy-MM-dd")),
         "Prepare gearsets, restock consumables, confirm roster."
