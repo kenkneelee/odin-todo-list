@@ -295,6 +295,7 @@ export default function displayUI() {
                         1
                     )[0]
                 );
+                projects[1].taskList[projects[1].taskList.length-1].projectObject = projects[1];
                 projects.updateAll();
                 console.log(project);
                 console.log(projects[1]);
