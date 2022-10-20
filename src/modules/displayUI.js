@@ -506,7 +506,7 @@ export default function displayUI() {
         document.body.appendChild(modal);
 
         window.onclick = function (event) {
-            if (event.target == modal) {
+            if (event.target == modal || event.target == closeModal) {
                 modal.style.display = "none";
                 document.getElementById("incomplete")
                     ? modalForm.removeChild(

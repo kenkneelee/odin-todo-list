@@ -185,6 +185,11 @@ header {
 
 .close {
     align-self: flex-end;
+    cursor:pointer;
+}
+
+.close:hover {
+    color: white;
 }
 
 .modal-content > form {
